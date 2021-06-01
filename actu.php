@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>COV19</title> 
@@ -30,7 +31,28 @@
             </ul>
               
           </div>
-          <button class="btn btn-outline-success pull-right" type="submit">Connexion</button>
+          <?php 
+                    //phase de verification de session
+                    session_start();
+                    echo $_SESSION['id'];
+                    echo $_SESSION['pass'];
+                    if (isset($_SESSION['id']) && isset($_SESSION['pass'])) { 
+                    //code pour la deconnection du compte
+                    echo "Bonjour ".$_SESSION['id']." ";?>
+                    <a class="btn btn-success me-auto pull-right" href="<?php session_destroy();?>" role="button">Deconnexion</a>
+
+                    <?php
+                    }
+                    else{
+                    session_destroy();
+                    ?>
+                    
+                    <a class="btn btn-success me-auto pull-right m-2" href="inscription.php" role="button">Inscription</a>
+                    <a class="btn btn-outline-secondary me-auto pull-right m-2" href="connexion.php" role="button">Connexion</a>
+                    <?php
+                    }
+
+                    ?>
         </div>
       </nav>
     <body>
