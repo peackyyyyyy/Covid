@@ -1,11 +1,4 @@
 <!doctype html>
-<?php session_start();
-try{
-  include("setting/parametre.inc.php");
-}
-catch(Exception $e){
-die('Connexion impossible à la base de données !'.$e->getMessage());
-}?>
 <html>
     <head>
         <title>COV19</title> 
@@ -17,16 +10,16 @@ die('Connexion impossible à la base de données !'.$e->getMessage());
     </head>
     
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#"></a>
-                <img src="img/COVID19.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
-                COV19
-              </a>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.php">Accueil</a>
-              </li>
+            <a class="navbar-brand" href="#">COV19</a>
+            <img src="img/COVID19.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="index.php">Accueil</a>
+                </li>
               <li class="nav-item">
                 <a class="nav-link" href="actu.php">Actualités</a>
               </li>
@@ -37,22 +30,18 @@ die('Connexion impossible à la base de données !'.$e->getMessage());
                 <a class="nav-link" href="apropos.php">À propos</a>
               </li>
             </ul>
-              
-          </div>
-                    <?php 
+            <?php 
                     //phase de verification de session
-                    echo $_SESSION['id'];
-                    echo $_SESSION['pass'];
+                    session_start();
                     
                     if (isset($_SESSION['id']) && isset($_SESSION['pass'])) { 
-                    //code pour la deconnection du compte
-                    echo "Bonjour ".$_SESSION['id']." ";?>
-                    <a class="btn btn-success me-auto pull-right" href="<?php session_destroy();?>" role="button">Deconnexion</a>
+                    //code pour la deconnection du compte?>
+                    <a class="btn btn-success me-auto pull-right m-2" href="profil.php" role="button">Mon profil</a>
+                    <a class="btn btn-outline-secondary me-auto pull-right m-2" href="deconnexion.php" role="button">Deconnexion</a>
 
                     <?php
                     }
                     else{
-                    session_destroy();
                     ?>
                     
                     <a class="btn btn-success me-auto pull-right m-2" href="inscription.php" role="button">Inscription</a>
@@ -66,8 +55,9 @@ die('Connexion impossible à la base de données !'.$e->getMessage());
                     die('Connexion impossible à la base de données !'.$e->getMessage());
                     }
                     ?>
+            </div>
                     
-        </div>
+                    
       </nav>
     <body>
 

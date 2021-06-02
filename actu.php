@@ -9,16 +9,16 @@
         <link rel="icon" href="img/COVID19.ico">
     </head>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="index.php"></a>
-                <img src="img/COVID19.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
-                COV19
-              </a>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.php">Accueil</a>
-              </li>
+            <a class="navbar-brand" href="#">COV19</a>
+            <img src="img/COVID19.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="index.php">Accueil</a>
+                </li>
               <li class="nav-item">
                 <a class="nav-link" href="actu.php">Actualités</a>
               </li>
@@ -29,35 +29,48 @@
                 <a class="nav-link" href="apropos.php">À propos</a>
               </li>
             </ul>
-              
-          </div>
-          <?php 
+            <?php 
                     //phase de verification de session
                     session_start();
-                    echo $_SESSION['id'];
-                    echo $_SESSION['pass'];
+                    
                     if (isset($_SESSION['id']) && isset($_SESSION['pass'])) { 
-                    //code pour la deconnection du compte
-                    echo "Bonjour ".$_SESSION['id']." ";?>
-                    <a class="btn btn-success me-auto pull-right" href="<?php session_destroy();?>" role="button">Deconnexion</a>
+                    //code pour la deconnection du compte?>
+                    <a class="btn btn-success me-auto pull-right m-2" href="profil.php" role="button">Mon profil</a>
+                    <a class="btn btn-outline-secondary me-auto pull-right m-2" href="deconnexion.php" role="button">Deconnexion</a>
 
                     <?php
                     }
                     else{
-                    session_destroy();
                     ?>
                     
                     <a class="btn btn-success me-auto pull-right m-2" href="inscription.php" role="button">Inscription</a>
                     <a class="btn btn-outline-secondary me-auto pull-right m-2" href="connexion.php" role="button">Connexion</a>
                     <?php
                     }
-
+                    try{
+                      include("setting/parametre.inc.php");
+                    }
+                    catch(Exception $e){
+                    die('Connexion impossible à la base de données !'.$e->getMessage());
+                    }
                     ?>
-        </div>
+            </div>
+                    
+                    
       </nav>
     <body>
         actu
-
+        https://api-a1.beta.curebot.io/v1/atom-feed/smartfolder/0108158cafff45a6ab6bbf57bcc4cb2c
+        https://api-a1.beta.curebot.io/v1/atom-feed/smartfolder/5fc33913bf184b708e11a7619580bc6b
+        https://api-a1.beta.curebot.io/v1/atom-feed/smartfolder/83ada5c002724cdc992b3f1faa80b0bd
+        https://www.who.int/feeds/entity/csr/don/fr/rss.xml
+        <br>
+        <?php
+        $xml = simplexml_load_file("https://api-a1.beta.curebot.io/v1/atom-feed/smartfolder/0108158cafff45a6ab6bbf57bcc4cb2c");
+        echo $xml->entry->title;
+        echo "<a href='".$xml->entry->id."'>Lien</a>";
+        
+        ?>
         <div class="card-group">
             <div class="card">
               <img class="card-img-top" src="img/img1.jpg" alt="Card image cap">
@@ -65,6 +78,8 @@
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                <button type="button" class="btn btn-primary">Ajouter</button>
+                
               </div>
             </div>
             <div class="card">
@@ -73,6 +88,7 @@
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                <button type="button" class="btn btn-primary">Ajouter</button>
               </div>
             </div>
             <div class="card">
@@ -81,6 +97,7 @@
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                <button type="button" class="btn btn-primary">Ajouter</button>
               </div>
             </div>
           </div>

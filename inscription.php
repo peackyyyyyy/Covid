@@ -9,16 +9,16 @@
         <link rel="icon" href="img/COVID19.ico">
     </head>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="index.php"></a>
-                <img src="img/COVID19.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
-                COV19
-              </a>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.php">Accueil</a>
-              </li>
+            <a class="navbar-brand" href="#">COV19</a>
+            <img src="img/COVID19.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="index.php">Accueil</a>
+                </li>
               <li class="nav-item">
                 <a class="nav-link" href="actu.php">Actualités</a>
               </li>
@@ -29,30 +29,32 @@
                 <a class="nav-link" href="apropos.php">À propos</a>
               </li>
             </ul>
-              
-          </div>
-          <?php 
+                    <?php 
                     //phase de verification de session
                     session_start();
-
+                    
                     if (isset($_SESSION['id']) && isset($_SESSION['pass'])) { 
-                    //code pour la deconnection du compte
-                    echo "Bonjour ".$_SESSION['id']." ";?>
-                    <a class="btn btn-success me-auto pull-right" href="<?php session_destroy();?>" role="button">Deconnexion</a>
+                    //code pour la deconnection du compte?>
+                    <a class="btn btn-success me-auto pull-right m-2" href="profil.php" role="button">Mon profil</a>
+                    <a class="btn btn-outline-secondary me-auto pull-right m-2" href="deconnexion.php" role="button">Deconnexion</a>
 
                     <?php
                     }
                     else{
-                    session_destroy();
                     ?>
                     
                     <a class="btn btn-success me-auto pull-right m-2" href="inscription.php" role="button">Inscription</a>
                     <a class="btn btn-outline-secondary me-auto pull-right m-2" href="connexion.php" role="button">Connexion</a>
                     <?php
                     }
-
+                    try{
+                      include("setting/parametre.inc.php");
+                    }
+                    catch(Exception $e){
+                    die('Connexion impossible à la base de données !'.$e->getMessage());
+                    }
                     ?>
-        </div>
+            </div>     
       </nav>
 <body>
 
@@ -63,9 +65,8 @@ try{
 catch(Exception $e){
 die('Connexion impossible à la base de données !'.$e->getMessage());
 }
-session_start();
 ?>
-<h1 class="display-1 text-center text-info">Inscription</h1>
+<h1 class="display-3 text-center text-info">Inscription</h1>
 
     <form method="post">
       <div class="form-row p-3">
@@ -79,11 +80,11 @@ session_start();
         </div>
       </div>
       <div class="form-group p-3">
-          <label for="inputEmail4">E-mail</label>
+          <label for="inputEmail">E-mail</label>
           <input type="email" class="form-control" name="inputEmail" placeholder="E-mail">
       </div>
       <div class="form-group p-3">
-        <label for="inputAddress">Addresse</label>
+        <label for="inputAddress">Adresse</label>
         <input type="text" class="form-control" name="inputAddress" placeholder="1234 Main St">
       </div>
       <div class="form-row p-3">
@@ -131,9 +132,27 @@ if ($nom&&$prenom&&$adresse&&$email&&$password&&$repeatpassword)
         echo "Votre identifiant est ".$ligne2[0].".";
         $_SESSION["idutilisateur"]=$ligne2[0];
     }
-}else echo "Les mots de passe ne sont pas identiques";
-}else echo "Le mot de passe est trop court !";
-}else echo "Veuillez saisir tous les champs !";
+}else ?>
+    
+<div class="alert alert-danger" role="alert">
+  Les<a href="#" class="alert-link"> mots de passe </a>ne sont pas identiques.
+</div>
+
+<?php
+}else ?>
+    
+<div class="alert alert-danger" role="alert">
+  Le<a href="#" class="alert-link"> mot de passe </a>est trop court !
+</div>
+
+<?php
+}else ?>
+    
+<div class="alert alert-danger" role="alert">
+  <a href="#" class="alert-link">Veuillez saisir tous les champs !</a>
+</div>
+
+<?php
 }                
    
 ?>
