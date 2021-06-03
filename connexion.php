@@ -88,10 +88,11 @@ if (isset($_POST['submit'])){
 	$_SESSION['pass'] = $_POST['inputPassword1'];
 	$password = md5($_SESSION['pass']);
 		//Apres identification d'un client
-		$req="SELECT utilisateur.id_utilisateur, utilisateur.Mdp FROM utilisateur WHERE utilisateur.id_utilisateur='".$_SESSION['id']."' AND utilisateur.Mdp='".$password."'";
+		$req="SELECT utilisateur.id_utilisateur,utilisateur.Mdp,utilisateur.adm FROM utilisateur WHERE utilisateur.id_utilisateur='".$_SESSION['id']."' AND utilisateur.Mdp='".$password."'";
 		$result=$bd->query($req);
 		while($ligne=$result->fetch()){
 			if ($_SESSION["id"]==$ligne[0] && $password==$ligne[1]) {
+        $_SESSION['adm']=$ligne[2];
 				header("location: index.php");
 			}
 		}?>

@@ -81,7 +81,7 @@
                         <div class="card-body">
                           <h5 class="card-title"><?php echo $xml->entry[$i]->title;?></h5>
                           <p class="font-italic"> <?php echo $xml->entry[$i]->author->name;?></p>
-                          <p class="card-text text-wrap"><?php echo $xml->entry[$i]->summary;?></p>
+                          <p class="card-text"><small><?php echo $xml->entry[$i]->summary;?></small></p>
                           <p class="card-text"><?php echo "<a href='".$xml->entry[$i]->id."' target='_blank'>En savoir +</a>";?></p>
                           <button type="button" class="btn btn-primary" onclick="ajout('<?php echo $xml->entry[$i]->id;?>')">Ajouter aux favoris</button>
                           
@@ -199,7 +199,7 @@
             <?php }
             else{?>
             var msg="Vous devez être connectez !";
-            console.log(msg)
+            console.log(msg);
             alert(msg);
             <?php }?>
           }

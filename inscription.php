@@ -118,42 +118,52 @@ if ($nom&&$prenom&&$adresse&&$email&&$password&&$repeatpassword)
                 {
             // On crypte le mot de passe
                 $password = md5($password);
+                $reqmail="SELECT mail FROM utilisateur WHERE mail='".$email."'";
+                $resultmail=$bd->prepare($reqmail);
+                $resultmail->execute();
+                if ($resultmail->rowCount()>=1) {
+                  echo "<script> var msg='compte déjà crée avec cette adresse mail!'; alert(msg);</script>";
+                  return "compte déjà crée avec cette adresse mail";
+                }
+                $resultmail->closeCursor();
+                //requete qui crée le client
+                $req="INSERT INTO Utilisateur (Nom,Prenom,Mail,Adresse_postale,Mdp,Adm) VALUES
+                ('".$nom."','".$prenom."','".$email."','".$adresse."','".$password."',0)";
+                $result=$bd->prepare($req);
+                $result->execute();
+                $result->closeCursor();
+                $req2="SELECT id_utilisateur FROM utilisateur WHERE mail='".$email."' AND Adresse_postale='".$adresse."' AND Mdp='".$password."'";
+                $result2=$bd->query($req2);
+                while($ligne2=$result2->fetch()){
+                    echo "Inscription terminée! <br>";
+                    echo "Votre identifiant est ".$ligne2[0].".";
+                    $_SESSION["idutilisateur"]=$ligne2[0];
+                }
+                }else {?>
+                    
+                    <div class="alert alert-danger" role="alert">
+                      Les<a href="#" class="alert-link"> mots de passe </a>ne sont pas identiques.
+                    </div>
 
-    //requete qui crée le client
-    $req="INSERT INTO Utilisateur (Nom,Prenom,Mail,Adresse_postale,Mdp,Adm) VALUES
-    ('".$nom."','".$prenom."','".$email."','".$adresse."','".$password."',0)";
-    $result=$bd->prepare($req);
-    $result->execute();
-    $result->closeCursor();
-    $req2="SELECT id_utilisateur FROM utilisateur WHERE mail='".$email."' AND Adresse_postale='".$adresse."' AND Mdp='".$password."'";
-    $result2=$bd->query($req2);
-    while($ligne2=$result2->fetch()){
-        echo "Inscription terminée! <br>";
-        echo "Votre identifiant est ".$ligne2[0].".";
-        $_SESSION["idutilisateur"]=$ligne2[0];
-    }
-}else ?>
-    
-<div class="alert alert-danger" role="alert">
-  Les<a href="#" class="alert-link"> mots de passe </a>ne sont pas identiques.
-</div>
+                    <?php
+                    }
+              }else{ ?>
+                  
+              <div class="alert alert-danger" role="alert">
+                Le<a href="#" class="alert-link"> mot de passe </a>est trop court !
+              </div>
 
-<?php
-}else ?>
-    
-<div class="alert alert-danger" role="alert">
-  Le<a href="#" class="alert-link"> mot de passe </a>est trop court !
-</div>
+              <?php
+              }
+              }else {?>
+                    
+                <div class="alert alert-danger" role="alert">
+                  <a href="#" class="alert-link">Veuillez saisir tous les champs !</a>
+                </div>
 
-<?php
-}else ?>
-    
-<div class="alert alert-danger" role="alert">
-  <a href="#" class="alert-link">Veuillez saisir tous les champs !</a>
-</div>
-
-<?php
-}                
+                <?php
+                }
+              }                
    
 ?>
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 02 juin 2021 à 15:02
+-- Généré le : jeu. 03 juin 2021 à 10:32
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -30,18 +30,12 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `favori`;
 CREATE TABLE IF NOT EXISTS `favori` (
   `numero` int(11) NOT NULL AUTO_INCREMENT,
-  `url` longtext NOT NULL,
+  `url_fav` longtext NOT NULL,
+  `date_ajout` varchar(50) NOT NULL,
   `id_utilisateur` int(11) NOT NULL,
   PRIMARY KEY (`numero`),
   KEY `favori_utilisateur_FK` (`id_utilisateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `favori`
---
-
-INSERT INTO `favori` (`numero`, `url`, `id_utilisateur`) VALUES
-(1, 'https://www.huffingtonpost.fr/entry/coronavirus-le-plexiglas-lui-aussi-en-rupture-de-stock_fr_5ecb59dbc5b66ddcaf0f02ea', 1);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -86,15 +80,14 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `Mdp` varchar(50) NOT NULL,
   `Adm` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_utilisateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `utilisateur`
 --
 
 INSERT INTO `utilisateur` (`id_utilisateur`, `Nom`, `Prenom`, `Mail`, `Adresse_postale`, `Mdp`, `Adm`) VALUES
-(1, 'MARION', 'ThÃ©o', 'theomarion08@gmail.com', '6 rue de chenneviÃ¨res', '7682fe272099ea26efe39c890b33675b', 0),
-(2, 'MARION', 'ThÃ©o', 'theomarion08@gmail.com', '6 rue de chenneviÃ¨res', '7682fe272099ea26efe39c890b33675b', 0);
+(1, 'MARION', 'ThÃ©o', 'theomarion08@gmail.com', '6 rue des bigo', '7682fe272099ea26efe39c890b33675b', 1);
 
 --
 -- Contraintes pour les tables déchargées

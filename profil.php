@@ -65,6 +65,12 @@
       <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
         <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Modifier</a>
         <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Mes favoris</a>
+        <?php
+        if ($_SESSION['adm']==1) {?>
+        <a class="nav-item nav-link" href="admin.php" role="tab" aria-controls="nav-profile" aria-selected="false">Admin</a>
+        <?php
+        }
+        ?>
       </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
