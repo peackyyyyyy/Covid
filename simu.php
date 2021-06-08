@@ -59,9 +59,74 @@
                     
       </nav>
     <body>
-        SImulation
-    
+    <h1 class="display-3 text-center text-info">Simulation</h1>
+
+    <form method="post">
+      <div class="form-row p-3">
+        <div class="form-group col-md-1">
+          <label for="population">Population</label>
+          <input type="number" class="form-control" name="population" placeholder="800">
+        </div>
+        <div class="form-group col-md-2">
+          <label for="date_Confinement">Date Confinement</label>
+          <input type="date" class="form-control" name="date_Confinement">
+        </div>
+        <div class="form-group col-md-2">
+          <label for="mesure_sanitaires">Mesures sanitaires</label>
+          <select name="mesure_sanitaires" class="form-control">
+              <option value=""></option>
+              <option value="1">Pas strict</option>
+              <option value="2">Normal</option>
+              <option value="3">Strict</option>
+          </select>
+        </div>
+        <div class="form-group col-md-1">
+          <label for="Couvre_feux">Couvre-feux</label>
+          <select name="Couvre_feux" class="form-control">
+              <option value=""></option>
+              <option value="0">Non</option>
+              <option value="1">Oui</option>
+          </select>
+        </div>
+        <div class="form-group col-md-2">
+          <label for="fermeture_frontieres">Fermeture des frontieres</label>
+          <select name="fermeture_frontieres" class="form-control">
+              <option value=""></option>
+              <option value="0">Non</option>
+              <option value="1">Oui</option>
+          </select>
+        </div>
+        <div class="form-group col-md-2">
+          <label for="traitement_maladie">Traitement de la maladie</label>
+          <select name="traitement_maladie" class="form-control">
+              <option value=""></option>
+              <option value="0">Non</option>
+              <option value="1">Oui</option>
+          </select>
+        </div>
+        <div class="form-group col-md-2">
+          <label for="date_vaccin">Date Vaccin</label>
+          <input type="date" class="form-control" name="date_vaccin" placeholder="800">
+        </div>
+        <button type="submit" class="btn btn-primary m-3" name="submit">Lancer</button>
+      </div>
+    </form>
+
+    <?php 
+
+    if (isset($_POST["submit"])){
+      echo $_POST["population"]."<br>";
+      echo $_POST["date_Confinement"]."<br>";
+      echo $_POST["mesure_sanitaires"]."<br>";
+      echo $_POST["Couvre_feux"]."<br>";
+      echo $_POST["fermeture_frontieres"]."<br>";
+      echo $_POST["traitement_maladie"]."<br>";
+      echo $_POST["date_vaccin"]."<br>";
+    }
+
+    ?>
     </body>
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

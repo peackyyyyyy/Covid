@@ -3,8 +3,7 @@ DIR_SOURCE := sources
 
 venv: clean req-app.txt
 	python3 -m venv $(VENV)
-	$(VENV)/bin/pip install --upgrade pip
-	$(VENV)/bin/pip install -r req-app.txt
+	$(VENV)/bin/pip3 install -r req-app.txt
 
 clean:
 	rm -rf $(VENV)
