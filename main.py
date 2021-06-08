@@ -1,5 +1,6 @@
 import base64
 import io
+from time import sleep
 
 from dataclasses import dataclass
 from enum import Enum
@@ -7,7 +8,7 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-from flask import Flask
+from flask import Flask, send_file, render_template
 
 UNSEEN = 0
 INQUEUE = 2
@@ -406,21 +407,23 @@ import matplotlib.animation as animation
 app = Flask(__name__)
 
 
-@app.route('/', methods=['GET'])
+@app.route('/simulation.php', methods=['GET'])
 def build_plot():
     img = io.BytesIO()
     anim = animation.FuncAnimation(fig, next_loop_event, frames=np.arange(DURATION * 24), interval=100, repeat=False)
+    sleep(1)
     plt.savefig(img, format='png')
     img.seek(0)
 
     plot_url = base64.b64encode(img.getvalue()).decode()
 
-    return '<img src="data:image/png;base64,{}">'.format(plot_url)
+    return render_template('test.html', plot_url=plot_url)
 
 
 if __name__ == '__main__':
     people = create_data()
     update_graph(people)
+
     fig = plt.figure(1, figsize=(30, 13))
     app.debug = True
     app.run()
