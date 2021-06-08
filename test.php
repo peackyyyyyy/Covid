@@ -43,10 +43,7 @@
 </div>
 </body>
 <script>    
-          function ajout() {
-            window.location.href = "test.php?url=zddddddddddddddddd";
-            window.location.href = "test.php";
-            header("Refresh:0; url=test.php");
-          }
+
+
 </script>
 </html>

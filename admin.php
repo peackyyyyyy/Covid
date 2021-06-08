@@ -67,19 +67,96 @@
         ?>
 
     <h1 class="display-3 text-center text-info">Admin</h1>
+          <?php
+          $password = md5($_SESSION['pass']);
+          $req="SELECT * FROM utilisateur";
+          $result=$bd->query($req);
+          while($ligne=$result->fetch()){
+                  ?>
+                  <form method="post" action="adminreq.php">
+                  <div class="form-row p-3">
+                      <div class="form-group col-md-1">
+                              <label for="inputid">ID</label>
+                              <input type="text" class="form-control" name="inputid" value="<?php echo $ligne[0];?>" readonly>
+                      </div>
+                      <div class="form-group col-md-2">
+                          <label for="inputnom">Nom</label>
+                          <input type="text" class="form-control" name="inputnom" value="<?php echo $ligne[1];?>">
+                      </div>
+                      <div class="form-group col-md-2">
+                          <label for="inputprenom">Prénom</label>
+                          <input type="text" class="form-control" name="inputprenom" value="<?php echo $ligne[2];?>">
+                      </div>
+                      <div class="form-group col-md-2">
+                          <label for="inputEmail">E-mail</label>
+                          <input type="email" class="form-control" name="inputEmail" value="<?php echo $ligne[3];?>">
+                      </div>
+                      <div class="form-group col-md-2">
+                          <label for="inputAddress">Adresse</label>
+                          <input type="text" class="form-control" name="inputAddress" value="<?php echo $ligne[4];?>">
+                      </div>
+                      <div class="form-group col-md-1">
+                          <label for="inputAdmin">Admin</label>
+                          <select name="inputAdmin" class="form-control">
+                              <option value="<?php echo $ligne[6];?>"><?php echo $ligne[6];?></option>
+                              <?php if($ligne[6]==1){ echo '<option value="0">0</option>';}?>
+                              <?php if($ligne[6]==0){ echo '<option value="1">1</option>';}?>
+                          </select>
+                      </div>
+                      <button type="submit" class="btn btn-primary m-3" name="modif">Modifier</button>
+                      <button type="submit" class="btn btn-primary m-3" name="sup">Supprimer</button>
+                  </div>
+                  </form>
+                  <?php
+          }
+          ?>
 
-    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Gestion des utilisateurs</a>
-        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
-        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
-    </div>
-    </nav>
-    <div class="tab-content" id="nav-tabContent">
-    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">utilisateur</div>
-    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
-    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
-    </div>
+          <form method="post" action="adminreq.php">
+                  <div class="form-row p-3">
+                      <div class="form-group col-md-2">
+                          <label for="inputnom">Nom</label>
+                          <input type="text" class="form-control" name="inputnom">
+                      </div>
+                      <div class="form-group col-md-2">
+                          <label for="inputprenom">Prénom</label>
+                          <input type="text" class="form-control" name="inputprenom">
+                      </div>
+                      <div class="form-group col-md-2">
+                          <label for="inputEmail">E-mail</label>
+                          <input type="email" class="form-control" name="inputEmail">
+                      </div>
+                      <div class="form-group col-md-2">
+                          <label for="inputAddress">Adresse</label>
+                          <input type="text" class="form-control" name="inputAddress">
+                      </div>
+                      <div class="form-group col-md-2">
+                          <label for="inputPassword">Mot de passe</label>
+                          <input type="password" class="form-control" name="inputPassword">
+                      </div>
+                      <div class="form-group col-md-1">
+                          <label for="inputAdmin">Admin</label>
+                          <select name="inputAdmin" class="form-control">
+                              <option value=""></option>
+                              <option value="0">0</option>
+                              <option value="1">1</option>
+                          </select>
+                      </div>
+                      <button type="submit" class="btn btn-primary m-3" name="ajout">Ajouter</button>
+                  </div>
+            </form>
 
+            <?php
+            if (isset($_GET["c"])) {
+              ?>
+                              
+                <div class="alert alert-danger" role="alert">
+                  <a href="#" class="alert-link">Veuillez saisir tous les champs !</a>
+                </div>
+
+                <?php
+                
+            }
+            ?>
 
 
     </body>
