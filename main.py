@@ -406,7 +406,7 @@ import matplotlib.animation as animation
 app = Flask(__name__)
 
 
-@app.route('/', methods=['GET'])
+@app.route('/simulation', methods=['GET'])
 def build_plot():
     img = io.BytesIO()
     anim = animation.FuncAnimation(fig, next_loop_event, frames=np.arange(DURATION * 24), interval=100, repeat=False)
@@ -421,6 +421,7 @@ def build_plot():
 if __name__ == '__main__':
     people = create_data()
     update_graph(people)
+
     fig = plt.figure(1, figsize=(30, 13))
     app.debug = True
     app.run()
