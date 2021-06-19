@@ -2,6 +2,7 @@ import base64
 import io
 from time import sleep
 
+import mpld3
 from dataclasses import dataclass
 from enum import Enum
 import pandas as pd
@@ -9,6 +10,8 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 from flask import Flask, send_file, render_template
+from matplotlib.animation import MovieWriter
+from numpngw import AnimatedPNGWriter
 
 UNSEEN = 0
 INQUEUE = 2
@@ -20,8 +23,8 @@ sns.set()
 new_variant = 20
 day = []
 infected_per_day = []
-DURATION = 70  # in days
-FRAME_RATE = 25  # Refresh graphics very FRAME_RATE hours
+DURATION = 1  # in days
+FRAME_RATE = 2  # Refresh graphics very FRAME_RATE hours
 DENSITY = 900
 I0 = 0.03
 SOCIAL_DISTANCE = 0.003  # in km
@@ -404,26 +407,33 @@ import matplotlib.animation as animation
 # anim.save("simulation.mp4", fps=5, dpi=100, writer="ffmpeg")
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 
 
-@app.route('/simulation.php', methods=['GET'])
+@app.route('/simulation', methods=['GET'])
 def build_plot():
     img = io.BytesIO()
     anim = animation.FuncAnimation(fig, next_loop_event, frames=np.arange(DURATION * 24), interval=100, repeat=False)
     sleep(1)
     plt.savefig(img, format='png')
     img.seek(0)
-
     plot_url = base64.b64encode(img.getvalue()).decode()
 
     return render_template('test.html', plot_url=plot_url)
 
 
+@app.route('/html', methods=['GET'])
+def test():
+    anim = animation.FuncAnimation(fig, next_loop_event, frames=np.arange(DURATION * 24), interval=100, repeat=False)
+    html_str = mpld3.fig_to_html(fig)
+    Html_file= open("templates/test3.html","w")
+    Html_file.write(html_str)
+    Html_file.close()
+    return render_template('test3.html')
+
 if __name__ == '__main__':
     people = create_data()
     update_graph(people)
-
     fig = plt.figure(1, figsize=(30, 13))
     app.debug = True
     app.run()
