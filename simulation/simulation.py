@@ -173,8 +173,8 @@ class Simulation:
         if t % self.FRAME_RATE == 0:
             self.fig.clf()
             ax1, ax2, ax3 = self.fig.subplots(1, 3)
-            self.display_map(self.people, ax1)
-            self.plot_population(self.people, ax2)
+            self.display_map(ax1)
+            self.plot_population(ax2)
             self.plot_statistiques(ax3)
         else:
             self.plot_population(self.people)
@@ -187,8 +187,8 @@ class Simulation:
         # This creates a susceptible person located at (0.25,0.5)
         # and an infectious person located at (0.75,0.5)
         for i in range(self.DENSITY):
-            temp = Person(x=np.random.rand(), y=np.random.rand())
+            temp = Person(np.random.rand(), np.random.rand(), self)
             if i < self.DENSITY * 0.03:
-                self.people.append(InfectiousPerson(temp.x, temp.y))
+                self.people.append(InfectiousPerson(temp.x, temp.y, 0, self))
             else:
-                self.people.append(SusceptiblePerson(temp.x, temp.y))
+                self.people.append(SusceptiblePerson(temp.x, temp.y, self))

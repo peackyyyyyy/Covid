@@ -45,7 +45,7 @@ class SusceptiblePerson(Person):
         if self.is_in_infectious_cluster is True:
             if np.random.rand() < self.simulation.BETA2:
                 INFECTED += 1
-                return InfectiousPerson(self.x, self.y)
+                return InfectiousPerson(self.x, self.y, 0, self.simulation)
             else:
                 return self
         else:
@@ -53,6 +53,6 @@ class SusceptiblePerson(Person):
                 if i.state is SIRState.INFECTIOUS:
                     if np.random.rand() < self.simulation.BETA1:
                         INFECTED += 1
-                        return InfectiousPerson(self.x, self.y)
+                        return InfectiousPerson(self.x, self.y, 0, self.simulation)
             else:
                 return self
