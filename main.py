@@ -375,10 +375,11 @@ def next_loop_event(t):
 
     if t % FRAME_RATE == 0:
         fig.clf()
-        ax1, ax2, ax3 = fig.subplots(1, 3)
+        #ax1, ax2, ax3 = fig.subplots(1, 3)
+        ax1, ax2 = fig.subplots(1, 2)
         display_map(people, ax1)
         plot_population(people, ax2)
-        plot_statistiques(ax3)
+        #plot_statistiques(ax3)
     else:
         plot_population(people, None)
 
@@ -435,5 +436,5 @@ if __name__ == '__main__':
     people = create_data()
     update_graph(people)
     fig = plt.figure(1, figsize=(30, 13))
-    app.debug = True
-    app.run()
+    anim = animation.FuncAnimation(fig, next_loop_event, frames=np.arange(DURATION * 24), interval=100, repeat=False)
+    plt.show()
