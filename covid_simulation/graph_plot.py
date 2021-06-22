@@ -3,11 +3,11 @@ import pandas as pd
 from matplotlib import pyplot as plt
 import seaborn as sns
 
-from covid_simulation.constantes import Constantes, SIRState
+from covid_simulation.constantes import SimulationData, SIRState
 
 
 class GraphPlot:
-    def __init__(self, constantes: Constantes, fig):
+    def __init__(self, constantes: SimulationData, fig):
         self.constantes = constantes
         self.fig = fig
         self.count_by_population = None

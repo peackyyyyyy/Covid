@@ -1,7 +1,7 @@
 import numpy as np
 from dataclasses import dataclass
 
-from covid_simulation.constantes import Constantes, District, SIRState
+from covid_simulation.constantes import SimulationData, District, SIRState
 
 
 @dataclass
@@ -13,7 +13,7 @@ class Person:
     succ: list
     status: int
 
-    def __init__(self, x, y, constantes: Constantes):
+    def __init__(self, x, y, constantes: SimulationData):
         self.constantes = constantes
         self.x = x
         self.y = y
@@ -30,7 +30,7 @@ class Person:
 
 
 class RecoveredPerson(Person):
-    def __init__(self, x, y, constantes: Constantes):
+    def __init__(self, x, y, constantes: SimulationData):
         super().__init__(x, y, constantes)
         self.constantes = constantes
         self.state = SIRState.RECOVERED
@@ -72,7 +72,7 @@ class RecoveredPerson(Person):
 
 
 class InfectiousPerson(Person):
-    def __init__(self, x, y, clock, constantes: Constantes):
+    def __init__(self, x, y, clock, constantes: SimulationData):
         super().__init__(x, y, constantes)
         self.constantes = constantes
         self.state = SIRState.SUSCEPTIBLE
@@ -119,7 +119,7 @@ class InfectiousPerson(Person):
 
 
 class SusceptiblePerson(Person):
-    def __init__(self, x, y, constantes: Constantes):
+    def __init__(self, x, y, constantes: SimulationData):
         super().__init__(x, y, constantes)
         self.constantes = constantes
         self.state = SIRState.SUSCEPTIBLE
@@ -171,7 +171,7 @@ class SusceptiblePerson(Person):
 
 
 class DeadPerson(Person):
-    def __init__(self, x, y, constantes: Constantes):
+    def __init__(self, x, y, constantes: SimulationData):
         super().__init__(x, y, constantes)
         self.state = SIRState.SUSCEPTIBLE
         self.state = SIRState.DEAD

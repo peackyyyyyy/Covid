@@ -11,6 +11,8 @@ from covid_simulation.graph_plot import GraphPlot
 from covid_simulation.simulation_data import Simulation
 
 
+#todo create route from js to flask + add to mongo result + create simulation html file
+
 def set_up(DURATION, DENSITY, confinement, port_du_mask, border, new_variant):
     global constantes
     global simulation

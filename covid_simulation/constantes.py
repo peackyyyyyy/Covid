@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class Constantes:
+class SimulationData:
     def __init__(self, DURATION, DENSITY, confinement, port_du_mask, border, new_variant):
         self.UNSEEN = 0
         self.INQUEUE = 2

@@ -2,14 +2,14 @@ from enum import Enum
 
 import numpy as np
 
-from covid_simulation.constantes import Constantes, SIRState, District
+from covid_simulation.constantes import SimulationData, SIRState, District
 from covid_simulation.graph_plot import GraphPlot
 from covid_simulation.person import Person, InfectiousPerson, SusceptiblePerson
 
 
 class Simulation:
 
-    def __init__(self, constantes: Constantes, graphplot: GraphPlot):
+    def __init__(self, constantes: SimulationData, graphplot: GraphPlot):
         self.constantes = constantes
         self.graphplot = graphplot
         self.counter = 1
