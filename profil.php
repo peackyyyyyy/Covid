@@ -65,6 +65,7 @@
       <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
         <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Modifier</a>
         <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Mes favoris</a>
+        <a class="nav-item nav-link" id="nav-histo-tab" data-toggle="tab" href="#nav-histo" role="tab" aria-controls="nav-histo" aria-selected="false">Mon historique</a>
         <?php
         if ($_SESSION['adm']==1) {?>
         <a class="nav-item nav-link" href="admin.php" role="tab" aria-controls="nav-profile" aria-selected="false">Admin</a>
@@ -119,7 +120,7 @@
                   $result=$bd->prepare($req);
                   $result->execute();
                   $result->closeCursor();
-                  header("Refresh:0");
+                  echo "<script>window.location.href = 'profil.php';</script>";
 
                   }
               else{?>
@@ -158,6 +159,11 @@
             ?>
            </div>
       </div>
+      <div class="tab-pane fade" id="nav-histo" role="tabpanel" aria-labelledby="nav-histo-tab">
+
+                historique
+
+      </div>
     </div>
     </body>
     <script>    
@@ -174,6 +180,7 @@
               $result=$bd->prepare($req);
               $result->execute();
               $result->closeCursor();
+              
             }?>
             //window.location.href = "profil.php";
             //header("Refresh:0; url=profil.php");
