@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class Constantes:
-    def __init__(self):
+    def __init__(self, DURATION, DENSITY, confinement, port_du_mask, border, new_variant):
         self.UNSEEN = 0
         self.INQUEUE = 2
         self.DONE = 1
@@ -10,12 +10,12 @@ class Constantes:
         self.count_by_population = None
         self.people = []
         # Some constants
-        self.new_variant = 20
+        self.new_variant = new_variant
         self.day = []
         self.infected_per_day = []
-        self.DURATION = 5  # in days
+        self.DURATION = DURATION  # in days
         self.FRAME_RATE = 2  # Refresh graphics very FRAME_RATE hours
-        self.DENSITY = 900
+        self.DENSITY = DENSITY
         self.I0 = 0.03
         self.SOCIAL_DISTANCE = 0.003  # in km
         self.SPEED = 6  # km/day
@@ -25,10 +25,10 @@ class Constantes:
         self.GAMMA2 = 0.0002  # Probability to die (From "I" to "D")
         self.EPSILON = 0.006  # Probability to be Susceptible again (From "R" to "S")
         self.MAX_HOME_DISTANCE = 0.05
-        self.BORDER = False
+        self.BORDER = border
         self.clock = 0
-        self.LOCKDOWN = False
-        self.CLUSTERING = True
+        self.LOCKDOWN = confinement
+        self.CLUSTERING = port_du_mask
         self.INFECTED = 0
         self.A = (0., 0.82142857)
         self.B = (0.46896552, 0.53125)
