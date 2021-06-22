@@ -118,14 +118,6 @@ if ($nom&&$prenom&&$adresse&&$email&&$password&&$repeatpassword)
                 {
             // On crypte le mot de passe
                 $password = md5($password);
-                $reqmail="SELECT mail FROM utilisateur WHERE mail='".$email."'";
-                $resultmail=$bd->prepare($reqmail);
-                $resultmail->execute();
-                if ($resultmail->rowCount()>=1) {
-                  echo "<script> var msg='compte déjà crée avec cette adresse mail!'; alert(msg);</script>";
-                  return "compte déjà crée avec cette adresse mail";
-                }
-                $resultmail->closeCursor();
                 //requete qui crée le client
                 $req="INSERT INTO Utilisateur (Nom,Prenom,Mail,Adresse_postale,Mdp,Adm) VALUES
                 ('".$nom."','".$prenom."','".$email."','".$adresse."','".$password."',0)";
