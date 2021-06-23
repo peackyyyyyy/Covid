@@ -111,21 +111,23 @@
         <button type="submit" class="btn btn-primary m-3" name="submit">Lancer</button>
       </div>
     </form>
-
-    <?php 
-
-    if (isset($_POST["submit"])){
-      echo $_POST["population"]."<br>";
-      echo $_POST["date_Confinement"]."<br>";
-      echo $_POST["mesure_sanitaires"]."<br>";
-      echo $_POST["Couvre_feux"]."<br>";
-      echo $_POST["fermeture_frontieres"]."<br>";
-      echo $_POST["traitement_maladie"]."<br>";
-      echo $_POST["date_vaccin"]."<br>";
-    }
-
-    ?>
     </body>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        axios({
+           method: 'post',
+           url: 'hhtp:/localhost:5000/set',
+           data: {
+                    nombre_jours: 5,
+                    population: 30,
+                    confinement: 0,
+                    port_mask: 0,
+                    deplacement_region: 0,
+                    new_variant: 2
+           }
+        });
+    </script>
+
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

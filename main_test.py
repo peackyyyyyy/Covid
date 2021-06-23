@@ -6,17 +6,17 @@ import numpy as np
 import seaborn as sns
 from matplotlib import pyplot as plt, animation
 from flask import Flask, send_file, render_template, request, jsonify
-from covid_simulation.constantes import Constantes
+from covid_simulation.constantes import SimulationData
 from covid_simulation.graph_plot import GraphPlot
 from covid_simulation.simulation_data import Simulation
 
 
-#todo create route from js to flask + add to mongo result + create simulation html file
+# todo create route from js to flask + add to mongo result + create simulation html file
 
 def set_up(DURATION, DENSITY, confinement, port_du_mask, border, new_variant):
     global constantes
     global simulation
-    constantes = Constantes(DURATION, DENSITY, confinement, port_du_mask, border, new_variant)
+    constantes = SimulationData(DURATION, DENSITY, confinement, port_du_mask, border, new_variant)
     graphplot = GraphPlot(constantes, fig)
     simulation = Simulation(constantes, graphplot)
     people = simulation.create_data()
@@ -30,7 +30,11 @@ app = Flask(__name__, static_folder='static')
 def set_simulation():
     if request.method == 'POST':
         post_data = request.get_json()
-        set_up(post_data.get('nombre_jours'), post_data.get('population'), post_data.get('confinement'), post_data.get('port_mask'),
+        print(post_data.get('nombre_jours'), post_data.get('population'), post_data.get('confinement'),
+              post_data.get('port_mask'),
+              post_data.get('deplacement_region'), post_data.get('new_variant'))
+        set_up(post_data.get('nombre_jours'), post_data.get('population'), post_data.get('confinement'),
+               post_data.get('port_mask'),
                post_data.get('deplacement_region'), post_data.get('new_variant'))
     return jsonify("ok")
 
