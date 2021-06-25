@@ -112,19 +112,21 @@
       </div>
     </form>
     </body>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        axios({
-           method: 'post',
-           url: 'hhtp:/localhost:5000/set',
-           data: {
-                    nombre_jours: 5,
-                    population: 30,
-                    confinement: 0,
-                    port_mask: 0,
-                    deplacement_region: 0,
-                    new_variant: 2
-           }
+        const form = document.querySelector('submit');
+        form.addEventListener('input', function() {
+            axios({
+               method: 'post',
+               url: 'http:/localhost:5000/set',
+               data: {
+                        nombre_jours: 5,
+                        population: 30,
+                        confinement: 0,
+                        port_mask: 0,
+                        deplacement_region: 0,
+                        new_variant: 2
+               }
+            });
         });
     </script>
 
