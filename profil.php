@@ -147,7 +147,6 @@
                         <div class="card-body">
                           <a class="card-title" href="<?php echo $ligne[0];?>" target="_blank"><?php echo $ligne[0];?></a><br><br>
                           <button type="button" class="btn btn-primary" onclick="sup('<?php echo $ligne[0];?>')">Supprimer</button>
-                  
                         </div>
                         <div class="card-footer">
                                   <small class="text-muted">Ajouté le <?php echo $ligne[1];?></small>

@@ -32,6 +32,8 @@
             <?php 
                     //phase de verification de session
                     session_start();
+                    session_destroy();
+                    session_start();
                     
                     if (isset($_SESSION['id']) && isset($_SESSION['pass'])) { 
                     //code pour la deconnection du compte?>
@@ -59,7 +61,7 @@
                     
       </nav>
 <body>
-<h1 class="display-3 text-center text-info">Connexion</h1>
+<h1 class="display-5 text-center text-info">Connexion</h1>
 
 <?php 
 try{
@@ -72,7 +74,7 @@ die('Connexion impossible à la base de données !'.$e->getMessage());
 	<form method="post">
         <div class="form-group p-3">
           <label for="inputid">Identifiant</label>
-          <input type="text" class="form-control" name="inputid" placeholder="112" name="inputid">
+            <input type="text" class="form-control" name="inputid" placeholder="112" name="inputid" <?php if(isset($_GET['id_essai'])){ ?>value="<?php echo $_GET['id_essai'];?><?php }?>">
         </div>
         <div class="form-group p-3">
           <label for="inputPassword1">Mot de passe</label>
@@ -80,8 +82,8 @@ die('Connexion impossible à la base de données !'.$e->getMessage());
         </div>
       <button type="submit" class="btn btn-primary m-3" name="submit">Connexion</button>
     </form>
-
 <?php
+$c=0;
 if (isset($_POST['submit'])){
 	//phase de stockage de donnée le id et le mdp
 	$_SESSION['id'] = $_POST['inputid'];
@@ -93,16 +95,20 @@ if (isset($_POST['submit'])){
 		while($ligne=$result->fetch()){
 			if ($_SESSION["id"]==$ligne[0] && $password==$ligne[1]) {
         $_SESSION['adm']=$ligne[2];
+        echo "sale thoin";
+        $c=1;
 				header("location: index.php");
 			}
-		}?>
-
-    <div class="alert alert-danger" role="alert">
-      <a href="#" class="alert-link">Identifiant ou mot de passe</a> incorrect.
-    </div>
-
-    <?php
+		}
+    if($c==0){
+    session_destroy();
+    header("location: connexion.php?id_essai=".$_POST['inputid']);
+    }
 }
-?>
+if(isset($_GET['id_essai'])&&$c==0){ ?>
+  <div class="alert alert-danger" role="alert">
+    <a href="#" class="alert-link">Identifiant ou mot de passe</a> incorrect.
+  </div>
+  <?php }?>
 </body>
 </html>

@@ -59,12 +59,11 @@
                     
       </nav>
     <body>
-
-    le projet <br>
-    nous: <br>
-        l'école <br>
+    <h1 class="display-1 text-center text-info">COV19</h1>
+    <h1 class="display-2 text-center text-info">Le Projet</h1>
+    <h1 class="display-3 text-center text-info">L'équipe</h1>
+    <h1 class="display-4 text-center text-info">L'école</h1>
     
-
     </body>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
