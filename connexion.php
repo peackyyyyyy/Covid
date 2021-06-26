@@ -3,14 +3,15 @@
 <head>
         <title>COV19</title> 
         <meta http-equiv="content.type" content="text/html"; charset="UTF-8">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <!-- Link CSS -->
         <link rel="stylesheet" href="css/style.css">
-        
+        <!-- Link bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="icon" href="img/COVID19.ico">
     </head>
+    <!-- Menu de navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">COV19</a>
-            <img src="img/COVID19.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+            <img src="img/cov19logo.png" alt="" width="40" height="40" class="d-inline-block align-text-top">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -32,8 +33,6 @@
             <?php 
                     //phase de verification de session
                     session_start();
-                    session_destroy();
-                    session_start();
                     
                     if (isset($_SESSION['id']) && isset($_SESSION['pass'])) { 
                     //code pour la deconnection du compte?>
@@ -50,9 +49,11 @@
                     <?php
                     }
                     try{
+                      //include les paramètres de connexion
                       include("setting/parametre.inc.php");
                     }
                     catch(Exception $e){
+                    //capture d'exception
                     die('Connexion impossible à la base de données !'.$e->getMessage());
                     }
                     ?>
@@ -71,9 +72,11 @@ catch(Exception $e){
 die('Connexion impossible à la base de données !'.$e->getMessage());
 }
 ?>
+<!--form de connexion-->
 	<form method="post">
         <div class="form-group p-3">
           <label for="inputid">Identifiant</label>
+            <!--après echec garde en mémoire l'input-->
             <input type="text" class="form-control" name="inputid" placeholder="112" name="inputid" <?php if(isset($_GET['id_essai'])){ ?>value="<?php echo $_GET['id_essai'];?><?php }?>">
         </div>
         <div class="form-group p-3">
@@ -93,9 +96,9 @@ if (isset($_POST['submit'])){
 		$req="SELECT utilisateur.id_utilisateur,utilisateur.Mdp,utilisateur.adm FROM utilisateur WHERE utilisateur.id_utilisateur='".$_SESSION['id']."' AND utilisateur.Mdp='".$password."'";
 		$result=$bd->query($req);
 		while($ligne=$result->fetch()){
+      //check si l'identifiant est correct
 			if ($_SESSION["id"]==$ligne[0] && $password==$ligne[1]) {
         $_SESSION['adm']=$ligne[2];
-        echo "sale thoin";
         $c=1;
 				header("location: index.php");
 			}
