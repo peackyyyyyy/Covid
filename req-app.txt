@@ -6,3 +6,4 @@ dataclasses
 flask
 numpngw
 pymongo
+flask_cors

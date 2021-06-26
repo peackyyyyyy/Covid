@@ -2,13 +2,16 @@ import base64
 import io
 from time import sleep
 
+import flask
+import matplotlib
 import numpy as np
 import seaborn as sns
 from matplotlib import pyplot as plt, animation
-from flask import Flask, send_file, render_template, request, jsonify
+from flask import Flask, send_file, render_template, request, jsonify, make_response
 from covid_simulation.constantes import SimulationData
 from covid_simulation.graph_plot import GraphPlot
 from covid_simulation.simulation_data import Simulation
+from flask_cors import CORS
 
 
 # todo create route from js to flask + add to mongo result + create simulation html file
@@ -24,19 +27,21 @@ def set_up(DURATION, DENSITY, confinement, port_du_mask, border, new_variant):
 
 
 app = Flask(__name__, static_folder='static')
+cors = CORS(app)
+matplotlib.use('Agg')
 
 
 @app.route('/set', methods=['GET', 'POST'])
 def set_simulation():
     if request.method == 'POST':
         post_data = request.get_json()
-        print(post_data.get('nombre_jours'), post_data.get('population'), post_data.get('confinement'),
-              post_data.get('port_mask'),
-              post_data.get('deplacement_region'), post_data.get('new_variant'))
         set_up(post_data.get('nombre_jours'), post_data.get('population'), post_data.get('confinement'),
                post_data.get('port_mask'),
                post_data.get('deplacement_region'), post_data.get('new_variant'))
-    return jsonify("ok")
+
+    response = make_response(render_template('test4.html'))
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 @app.route('/direct', methods=['GET'])
