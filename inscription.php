@@ -3,14 +3,15 @@
 <head>
         <title>COV19</title> 
         <meta http-equiv="content.type" content="text/html"; charset="UTF-8">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <!-- Link CSS -->
         <link rel="stylesheet" href="css/style.css">
-        
+        <!-- Link bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="icon" href="img/COVID19.ico">
     </head>
+    <!-- Menu de navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">COV19</a>
-            <img src="img/COVID19.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+            <img src="img/cov19logo.png" alt="" width="40" height="40" class="d-inline-block align-text-top">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -29,7 +30,7 @@
                 <a class="nav-link" href="apropos.php">À propos</a>
               </li>
             </ul>
-                    <?php 
+            <?php 
                     //phase de verification de session
                     session_start();
                     
@@ -48,13 +49,17 @@
                     <?php
                     }
                     try{
+                      //include les paramètres de connexion
                       include("setting/parametre.inc.php");
                     }
                     catch(Exception $e){
+                    //capture d'exception
                     die('Connexion impossible à la base de données !'.$e->getMessage());
                     }
                     ?>
-            </div>     
+            </div>
+                    
+                    
       </nav>
 <body>
 
@@ -66,26 +71,26 @@ catch(Exception $e){
 die('Connexion impossible à la base de données !'.$e->getMessage());
 }
 ?>
-<h1 class="display-3 text-center text-info">Inscription</h1>
+<h1 class="display-5 text-center text-info">Inscription</h1>
 
     <form method="post">
       <div class="form-row p-3">
         <div class="form-group col-md-6">
           <label for="inputnom">Nom</label>
-          <input type="text" class="form-control" name="inputnom" placeholder="Martin" name="inputnom">
+          <input type="text" class="form-control" name="inputnom" placeholder="Martin" name="inputnom" <?php if(isset($_GET['nom_essai'])){ ?>value="<?php echo $_GET['nom_essai'];?><?php }?>">
         </div>
         <div class="form-group col-md-6">
           <label for="inputprenom">Prénom</label>
-          <input type="text" class="form-control" name="inputprenom" placeholder="Martin">
+          <input type="text" class="form-control" name="inputprenom" placeholder="Martin" <?php if(isset($_GET['prenom_essai'])){ ?>value="<?php echo $_GET['prenom_essai'];?><?php }?>">
         </div>
       </div>
       <div class="form-group p-3">
           <label for="inputEmail">E-mail</label>
-          <input type="email" class="form-control" name="inputEmail" placeholder="E-mail">
+          <input type="email" class="form-control" name="inputEmail" placeholder="E-mail" <?php if(isset($_GET['mail_essai'])){ ?>value="<?php echo $_GET['mail_essai'];?><?php }?>">
       </div>
       <div class="form-group p-3">
         <label for="inputAddress">Adresse</label>
-        <input type="text" class="form-control" name="inputAddress" placeholder="1234 Main St">
+        <input type="text" class="form-control" name="inputAddress" placeholder="1234 Main St" <?php if(isset($_GET['adresse_essai'])){ ?>value="<?php echo $_GET['adresse_essai'];?><?php }?>">
       </div>
       <div class="form-row p-3">
         <div class="form-group col-md-6">
@@ -101,7 +106,7 @@ die('Connexion impossible à la base de données !'.$e->getMessage());
     </form>
         
 <?php
-   
+$c=0; 
 if (isset($_POST['submit'])){
 $nom = $_POST['inputnom'];
 $prenom = $_POST['inputprenom'];
@@ -130,34 +135,43 @@ if ($nom&&$prenom&&$adresse&&$email&&$password&&$repeatpassword)
                     echo "Inscription terminée! <br>";
                     echo "Votre identifiant est ".$ligne2[0].".";
                     $_SESSION["idutilisateur"]=$ligne2[0];
+                    $c=1;
                 }
-                }else {?>
-                    
-                    <div class="alert alert-danger" role="alert">
-                      Les<a href="#" class="alert-link"> mots de passe </a>ne sont pas identiques.
-                    </div>
-
-                    <?php
+                }
+                else {
+                  session_destroy();
+                header("location: inscription.php?nom_essai=".$_POST['inputnom']."&prenom_essai=".$_POST['inputprenom']."&mail_essai=".$_POST['inputEmail']."&adresse_essai=".$_POST['inputAddress']."&index=identique");
                     }
-              }else{ ?>
-                  
-              <div class="alert alert-danger" role="alert">
-                Le<a href="#" class="alert-link"> mot de passe </a>est trop court !
-              </div>
-
-              <?php
+              }else{ 
+                session_destroy();
+                header("location: inscription.php?nom_essai=".$_POST['inputnom']."&prenom_essai=".$_POST['inputprenom']."&mail_essai=".$_POST['inputEmail']."&adresse_essai=".$_POST['inputAddress']."&index=court");
               }
-              }else {?>
-                    
-                <div class="alert alert-danger" role="alert">
-                  <a href="#" class="alert-link">Veuillez saisir tous les champs !</a>
-                </div>
-
-                <?php
+              }else {
+                session_destroy();
+                header("location: inscription.php?nom_essai=".$_POST['inputnom']."&prenom_essai=".$_POST['inputprenom']."&mail_essai=".$_POST['inputEmail']."&adresse_essai=".$_POST['inputAddress']."&index=champ");
                 }
-              }                
-   
-?>
+              } 
+              
+              
+    if(isset($_GET['index'])&&$c==0){             
+      if($_GET['index']=="champ"){ ?>
+        <div class="alert alert-danger" role="alert">
+              <a href="#" class="alert-link">Veuillez saisir tous les champs !</a>
+        </div>
+        <?php }
+        
+      if($_GET['index']=="court"){ ?>
+          <div class="alert alert-danger" role="alert">
+          Le<a href="#" class="alert-link"> mot de passe </a>est trop court !
+        </div>
+        <?php }
 
+      if($_GET['index']=="identique"){ ?>
+        <div class="alert alert-danger" role="alert">
+          Les<a href="#" class="alert-link"> mots de passe </a>ne sont pas identiques.
+        </div>
+        <?php }
+        
+      }?>
 </body>
 </html>
