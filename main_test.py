@@ -27,17 +27,16 @@ def set_up(DURATION, DENSITY, confinement, port_du_mask, border, new_variant):
 
 
 app = Flask(__name__, static_folder='static')
-cors = CORS(app)
-matplotlib.use('Agg')
 
 
 @app.route('/set', methods=['GET', 'POST'])
 def set_simulation():
     if request.method == 'POST':
         post_data = request.get_json()
-        set_up(post_data.get('nombre_jours'), post_data.get('population'), post_data.get('confinement'),
-               post_data.get('port_mask'),
-               post_data.get('deplacement_region'), post_data.get('new_variant'))
+        print(post_data)
+        set_up(int(post_data.get('nombre_jours')), int(post_data.get('population')), bool(post_data.get('confinement')),
+               bool(post_data.get('port_mask')),
+               bool(post_data.get('deplacement_region')), int(post_data.get('new_variant')))
 
     response = make_response(render_template('test4.html'))
     response.headers.add('Access-Control-Allow-Origin', '*')
@@ -59,6 +58,8 @@ def build_plot():
 
 
 if __name__ == '__main__':
+    matplotlib.use('Agg')
+    CORS(app)
     sns.set()
     fig = plt.figure(1, figsize=(30, 13))
     app.run(debug=True)
