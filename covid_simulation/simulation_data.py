@@ -79,10 +79,11 @@ class Simulation:
                 self.constantes.BETA2 = 0.75
                 self.constantes.counter = 1
                 for p in self.constantes.people:
-                    if np.random.rand() < self.constantes.I0 / 9:
-                        p.state = SIRState.INFECTIOUS
-                    else:
-                        pass
+                    if p.state == SIRState.SUSCEPTIBLE or p.state == SIRState.RECOVERED:
+                        if np.random.rand() < self.constantes.I0 / 9:
+                            p.state = SIRState.INFECTIOUS
+                        else:
+                            pass
 
         self.update_graph(self.constantes.people)
 

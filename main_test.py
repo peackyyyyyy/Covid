@@ -80,5 +80,5 @@ if __name__ == '__main__':
     CORS(app)
     sns.set()
     fig = plt.figure(1, figsize=(30, 13))
-    set_up(10, 900, False, False, False, 15)
-    #app.run(debug=True)
+    #set_up(10, 900, False, False, False, 15)
+    app.run(debug=True)
