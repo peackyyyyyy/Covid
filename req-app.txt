@@ -3,5 +3,10 @@ numpy
 seaborn
 matplotlib
 dataclasses
-PyQt5==5.9.2
 flask
+numpngw
+pymongo
+flask_cors
+mongodb
+celery
+redis
