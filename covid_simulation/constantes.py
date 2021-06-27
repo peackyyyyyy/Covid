@@ -23,7 +23,7 @@ class SimulationData:
         self.BETA1 = 0.5  # Probality to gets infected (From "S" to "I")
         self.BETA2 = 0.75
         self.GAMMA1 = 7 * 24  # Number of hours before recovering (From "I" to "R")
-        self.GAMMA2 = 0.0002  # Probability to die (From "I" to "D")
+        self.GAMMA2 = 0.0005  # Probability to die (From "I" to "D")
         self.EPSILON = 0.006  # Probability to be Susceptible again (From "R" to "S")
         self.MAX_HOME_DISTANCE = 0.05
         self.BORDER = border

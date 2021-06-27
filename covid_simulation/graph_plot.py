@@ -51,6 +51,7 @@ class GraphPlot:
 
             # Add some text for labels, title and custom x-axis tick labels, etc.
             ax.set_ylabel('Number')
+            ax.set_xlabel('Day')
             ax.set_title('Infected per Day')
             ax.set_xticks(x)
 
@@ -62,5 +63,6 @@ class GraphPlot:
 
             # Add some text for labels, title and custom x-axis tick labels, etc.
             ax.set_ylabel('Number')
+            ax.set_xlabel('Day')
             ax.set_title('Dead per Day')
             ax.set_xticks(x)

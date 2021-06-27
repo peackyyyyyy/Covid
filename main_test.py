@@ -43,8 +43,6 @@ def add_simulation_worker(DURATION, DENSITY, confinement, port_du_mask, border, 
 def set_up(DURATION, DENSITY, confinement, port_du_mask, border, new_variant):
     global constantes
     global simulation
-    database_adapter = DatabaseAdapter(collection)
-    simulation_persistence = SimulationPersistence(database_adapter)
     constantes = SimulationData(DURATION, DENSITY, confinement, port_du_mask, border, new_variant)
     graphplot = GraphPlot(constantes, fig)
     simulation = Simulation(constantes, graphplot)
@@ -82,9 +80,34 @@ def add_simulation():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+@app.route('/simulation', methods=['GET'])
+def get_simulation():
+    pass
 
-@app.route('/direct', methods=['GET'])
-def build_plot():
+@app.route('/simulation_result', methods=['GET', 'POST'])
+def simulation_result():
+    fig = plt.figure(1, figsize=(30, 13))
+    post_data = request.get_json()
+    id = post_data.get('id')
+    result = simulation_persistence.find_one_simulation_by_id(id)
+    constantes = SimulationData(result.DURATION, result.DENSITY, result.confinement, result.port_du_mask, result.border,
+                                result.new_variant)
+    graphplot = GraphPlot(constantes, fig)
+    simulation = Simulation(constantes, graphplot)
+    simulation.plot_stats(result.infected_stats, result.dead_stats)
+
+    img = io.BytesIO()
+    sleep(1)
+    plt.savefig(img, format='png')
+    img.seek(0)
+    plot_url = base64.b64encode(img.getvalue()).decode()
+
+    return render_template('simulation_result.html', plot_url=plot_url)
+
+
+
+@app.route('/simulation_direct', methods=['GET'])
+def simulation_direct():
     fig = plt.figure(1, figsize=(30, 13))
     img = io.BytesIO()
     anim = animation.FuncAnimation(fig, simulation.next_loop_event, frames=np.arange(constantes.DURATION * 24),
@@ -94,7 +117,16 @@ def build_plot():
     img.seek(0)
     plot_url = base64.b64encode(img.getvalue()).decode()
 
-    return render_template('test.html', plot_url=plot_url)
+    return render_template('simulation_direct.html', plot_url=plot_url)
+
+
+def test(id):
+    result = simulation_persistence.find_one_simulation_by_id(id)
+    constantes = SimulationData(result.DURATION, result.DENSITY, result.confinement, result.port_du_mask, result.border,
+                                result.new_variant)
+    graphplot = GraphPlot(constantes, fig)
+    simulation = Simulation(constantes, graphplot)
+    simulation.plot_stats(result.infected_stats, result.dead_stats)
 
 
 if __name__ == '__main__':
@@ -102,10 +134,13 @@ if __name__ == '__main__':
     database = client.get_database('simulation')
     collection = database.get_collection('result')
     celery_app = Celery('task', broker='redis://localhost:6379/0')
+    database_adapter = DatabaseAdapter(collection)
+    simulation_persistence = SimulationPersistence(database_adapter)
     message_brocker = MessageBrokerAdapter(celery_app)
-    matplotlib.use('Agg')
+    #matplotlib.use('Agg')
     CORS(app)
     sns.set()
     fig = plt.figure(1, figsize=(30, 13))
+    plt.show()
     #add_simulation_worker(10, 900, False, False, False, 15)
-    app.run(debug=True)
+    #app.run(debug=True)

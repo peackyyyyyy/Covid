@@ -38,7 +38,4 @@ def calcule_result_of_simulation(id, DURATION, DENSITY, confinement, port_du_mas
     simulation.update_graph(people)
     for i in range(DURATION * 24):
         simulation.next_loop_event(i)
-    simulation_persistence.find_one_and_update_dataframe(id, Status.FINISH, DURATION, DENSITY, confinement,
-                                                         port_du_mask,
-                                                         border, new_variant, constantes.infected_per_day,
-                                                         constantes.dead_per_day)
+    simulation_persistence.find_one_and_update_simulation(id, Status.FINISH, constantes.infected_per_day, constantes.dead_per_day)

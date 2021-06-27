@@ -12,11 +12,9 @@ class SimulationPersistence:
     def __init__(self, database_adapter: DatabaseAdapter):
         self._database_adapter = database_adapter
 
-    def find_one_and_update_dataframe(self, id, status, DURATION, DENSITY, confinement, port_du_mask, border, new_variant,
-                                      infected_stats, dead_stats) -> str:
+    def find_one_and_update_simulation(self, id, status, infected_stats, dead_stats) -> str:
         path_dict = {
-            '$set': {'status': status, "duration": DURATION, "density": DENSITY, "confinement": confinement, "port_mask": port_du_mask,
-                     "border": border, "new_variant": new_variant, "infected_stats": infected_stats,
+            '$set': {'status': status, "infected_stats": infected_stats,
                      "dead_stats": dead_stats}}
         return self._database_adapter.find_one_and_update(id, path_dict)
 

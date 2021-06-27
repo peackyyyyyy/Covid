@@ -34,7 +34,7 @@ class DatabaseAdapter:
             print(e.args)
 
     def find_one_and_update(self, id: str, doc: dict) -> str:
-        filter = {"_id": id}
+        filter = {"_id": ObjectId(id)}
         result = self._collection.find_one_and_update(filter, doc, upsert=True, return_document=ReturnDocument.AFTER)
         return str(result['_id'])
 
