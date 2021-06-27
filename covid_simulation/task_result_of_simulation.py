@@ -13,7 +13,7 @@ from covid_simulation.graph_plot import GraphPlot
 from covid_simulation.simulation_data import Simulation
 from covid_simulation.simulation_result_persistence import SimulationPersistence
 
-celery_app = Celery('task')
+celery_app = Celery('task', broker='redis://localhost:6379/0')
 
 client = MongoClient('localhost')
 database = client.get_database('simulation')
@@ -22,6 +22,9 @@ matplotlib.use('Agg')
 sns.set()
 fig = plt.figure(1, figsize=(30, 13))
 
+
+# cd into Covid file
+# to start the workers /home/hugo/Covid/venv/bin/celery -A covid_simulation.task_result_of_simulation worker -Q simulation --loglevel=info
 
 @celery_app.task(queue='simulation', name='result_simulation')
 def calcule_result_of_simulation(id, DURATION, DENSITY, confinement, port_du_mask, border, new_variant, infected_stats,

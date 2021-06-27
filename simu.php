@@ -208,7 +208,7 @@
 
     <script>
 
-        $("button").click(function (e) {
+        $("#submit").click(function (e) {
 
             e.preventDefault();
 
@@ -228,7 +228,7 @@
 
                 type: "POST",
 
-                url: "http://localhost:5000/set",
+                url: "http://localhost:5000/add_simulation",
 
                 data: JSON.stringify({  "nombre_jours": duree,
 
@@ -248,7 +248,7 @@
 
                 success: function (data) {
 
-                    alert(JSON.stringify(data));
+                    alert("Simulation Ajouté");
 
                 }
 
