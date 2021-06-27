@@ -1,29 +1,19 @@
 <!DOCTYPE html>
 
 <html>
-
-    <head>
-
+<head>
         <title>COV19</title>
-
         <meta http-equiv="content.type" content="text/html"; charset="UTF-8">
-
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+        <!-- Link CSS -->
         <link rel="stylesheet" href="css/style.css">
-
-
-
+        <!-- Link bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="icon" href="img/COVID19.ico">
 
     </head>
-
+    <!-- Menu de navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-            <a class="navbar-brand" href="#">COV19</a>
-
-            <img src="img/COVID19.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
-
+            <img src="img/cov19logo.png" alt="" width="40" height="40" class="d-inline-block align-text-top">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 
               <span class="navbar-toggler-icon"></span>
@@ -97,13 +87,13 @@
                     }
 
                     try{
-
+                      //include les paramètres de connexion
                       include("setting/parametre.inc.php");
 
                     }
 
                     catch(Exception $e){
-
+                    //capture d'exception
                     die('Connexion impossible à la base de données !'.$e->getMessage());
 
                     }
@@ -122,83 +112,137 @@
 
     <h1 class="display-3 text-center text-info">Simulation</h1>
 
+          <!-- Button ajouter simulation -->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+          Ajouter Simulation
+          </button>
+
+          <!-- Modele du pop-up -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Ajouter Simulation</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                <form>
+
+                    <div class="form-row p-3">
+
+                      <div class="form-group col-md-6">
+
+                        <label for="population">Population</label>
+
+                        <input type="number" class="form-control" min=1 name="population" id="population" placeholder="800 habitants">
+
+                      </div>
+
+                      <div class="form-group col-md-6">
+
+                        <label for="duree">Durée (Jours)</label>
+
+                        <input type="number" class="form-control" min=20 name="duree" id="duree" placeholder="50 jours">
+
+                      </div>
+
+                      <div class="form-group col-md-6">
+
+                        <label for="mask">Port du mask</label>
+
+                        <select name="mask" class="form-control" id="mask">
+
+                            <option value="0">Non</option>
+
+                            <option value="1">Oui</option>
+
+                        </select>
+
+                      </div>
+
+                      <div class="form-group col-md-6">
+
+                        <label for="Confinement">confinement</label>
+
+                        <select name="Confinement" class="form-control" id="confinement">
+
+                            <option value="0">Non</option>
+
+                            <option value="1">Oui</option>
+
+                        </select>
+
+                      </div>
+
+                      <div class="form-group col-md-6">
+
+                        <label for="fermeture_frontieres">Fermeture des frontieres</label>
+
+                        <select name="fermeture_frontieres" class="form-control" id="fermeture_frontieres">
+
+                            <option value="0">Non</option>
+
+                            <option value="1">Oui</option>
+
+                        </select>
+
+                      </div>
+
+                      <div class="form-group col-md-6">
+
+                      <label for="variant">Apparition nouveau variant</label>
+
+                        <input type="number" class="form-control" min=0 name="variant" id="variant" placeholder="50 jours">
+
+                      </div>
 
 
-    <form>
 
-      <div class="form-row p-3">
+                    </div>
 
-        <div class="form-group col-md-1">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Lancer</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
-          <label for="population">Population</label>
 
-          <input type="number" class="form-control" name="population" id="population" placeholder="800">
 
-        </div>
+    <table id="tab" class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">ID Simulation</th>
+          <th scope="col">Parametres</th>
+          <th scope="col">Etat</th>
+          <th scope="col">Simulation</th>
+          <th scope="col">Resultat</th>
+        </tr>
+      </thead>
+      <tbody>
 
-        <div class="form-group col-md-2">
 
-          <label for="duree">Durée</label>
+        <!-- template-->
+        <tr>
+          <th scope="row">12226654</th>
+          <td>Parametres1<br>Parametres2<br>Parametres3<br></td>
+          <td>France</td>
+          <td><a href="simm"><button type="submit" id="simulation" class="btn btn-primary m-3" name="submit">Simulation</button></a></td>
+          <td><a href="simm"><button type="submit" id="resultat" class="btn btn-primary m-3" name="submit">Resultat</button></a></td>
+        </tr>
+        <!-- template-->
 
-          <input type="number" class="form-control" name="duree" id="duree">
 
-        </div>
+      </tbody>
+    </table>
 
-        <div class="form-group col-md-2">
 
-          <label for="mask">Port du mask</label>
 
-          <select name="mask" class="form-control" id="mask">
-
-              <option value="0">Non</option>
-
-              <option value="1">Oui</option>
-
-          </select>
-
-        </div>
-
-        <div class="form-group col-md-1">
-
-          <label for="Confinement">confinement</label>
-
-          <select name="Confinement" class="form-control" id="confinement">
-
-              <option value="0">Non</option>
-
-              <option value="1">Oui</option>
-
-          </select>
-
-        </div>
-
-        <div class="form-group col-md-2">
-
-          <label for="fermeture_frontieres">Fermeture des frontieres</label>
-
-          <select name="fermeture_frontieres" class="form-control" id="fermeture_frontieres">
-
-              <option value="0">Non</option>
-
-              <option value="1">Oui</option>
-
-          </select>
-
-        </div>
-
-        <div class="form-group col-md-2">
-
-        <label for="variant">Nouveau variant</label>
-
-          <input type="number" class="form-control" name="variant" id="variant">
-
-        </div>
-
-        <button type="submit" id="submit" class="btn btn-primary m-3" name="submit">Lancer</button>
-
-      </div>
-
-    </form>
 
     </body>
 
@@ -207,6 +251,23 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <script>
+
+        $(document).ready(get_simulation function(){
+            $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:5000/simulation',
+                    success:function(data)
+                    {
+                         $('#tab').append(
+                              $('<tr>')
+                                    .append($('<td>').append(data["id"]))
+                                    .append($('<td>').append("nombre_jours : "+data["duree"]<br>"population : "+data["population"]<br>"confinement : "+data["confinement"]<br>"port_mask : "+data["confinement"]<br>"deplacement_region : "+data["deplacement_region"]<br>"new_variant : "+data["new_variant"]<br>))
+                                    .append($('<td>').append(data["status"]))
+                                    .append($('<td>').append(<td><a href="simm"><button type="submit" id="simulation" class="btn btn-primary m-3" name="submit">Simulation</button></a>))
+                                    .append($('<td>').append(<td><a href="simm"><button type="submit" id="resultat" class="btn btn-primary m-3" name="submit">Resultat</button></a>))
+                         )
+                    }
+        }
 
         $("#submit").click(function (e) {
 
