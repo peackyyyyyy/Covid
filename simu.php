@@ -206,7 +206,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Lancer</button>
+                  <button type="button" id="lancer" class="btn btn-primary">Lancer</button>
                 </div>
               </div>
             </div>
@@ -228,13 +228,7 @@
 
 
         <!-- template-->
-        <tr>
-          <th scope="row">12226654</th>
-          <td>Parametres1<br>Parametres2<br>Parametres3<br></td>
-          <td>France</td>
-          <td><a href="simm"><button type="submit" id="simulation" class="btn btn-primary m-3" name="submit">Simulation</button></a></td>
-          <td><a href="simm"><button type="submit" id="resultat" class="btn btn-primary m-3" name="submit">Resultat</button></a></td>
-        </tr>
+
         <!-- template-->
 
 
@@ -252,24 +246,31 @@
 
     <script>
 
-        $(document).ready(get_simulation function(){
+        $(document).ready(function get_simulation(){
             $.ajax({
                     type: 'GET',
                     url: 'http://localhost:5000/simulation',
-                    success:function(data)
+                    success: function(data)
                     {
-                         $('#tab').append(
-                              $('<tr>')
-                                    .append($('<td>').append(data["id"]))
-                                    .append($('<td>').append("nombre_jours : "+data["duree"]<br>"population : "+data["population"]<br>"confinement : "+data["confinement"]<br>"port_mask : "+data["confinement"]<br>"deplacement_region : "+data["deplacement_region"]<br>"new_variant : "+data["new_variant"]<br>))
-                                    .append($('<td>').append(data["status"]))
-                                    .append($('<td>').append(<td><a href="simm"><button type="submit" id="simulation" class="btn btn-primary m-3" name="submit">Simulation</button></a>))
-                                    .append($('<td>').append(<td><a href="simm"><button type="submit" id="resultat" class="btn btn-primary m-3" name="submit">Resultat</button></a>))
-                         )
-                    }
-        }
+                        var tab = document.getElementById('tab');
+                        console.log(data);
+                        data.forEach(element => { console.log(element);
+                            tab.innerHTML += `
+                                <tr>
+                                  <th scope="row">${element['id']}</th>
+                                  <td>Duree : ${element['duree']}<br>Population : ${element['population']}<br>Port du masque :${element['port_mask']}<br>Deplacement inter-region : ${element['deplacement_region']}<br>Nouveau Variant : ${element['new_variant']}<br></td>
+                                  <td>${element['status']}</td>
+                                  <td><a href="simm"><button type="submit" id="simulation" class="btn btn-primary m-3" name="submit">Simulation</button></a></td>
+                                  <td><a href="simm"><button type="submit" id="resultat" class="btn btn-primary m-3" name="submit">Resultat</button></a></td>
+                                </tr>
+                            `;
+                        });
 
-        $("#submit").click(function (e) {
+                    }
+            });
+        });
+
+        $("#lancer").click(function (e) {
 
             e.preventDefault();
 

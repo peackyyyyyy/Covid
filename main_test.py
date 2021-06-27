@@ -88,7 +88,8 @@ def get_simulation():
         data.append({'id': simulation.get_id(), "duree": simulation.get_duration(), "population": simulation.get_density(),
                      "port_mask": simulation.get_port_du_mask(), "deplacement_region": simulation.get_border(),
                      "new_variant": simulation.get_new_variant(), "status": simulation.get_status()})
-    response = make_response(json.dumps({'success': True}), 200, {'ContentType': 'application/json'}, {'data': data})
+    response = make_response(jsonify(data), 200, {'ContentType': 'application/json'})
+    print(response.data)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
@@ -143,11 +144,11 @@ if __name__ == '__main__':
     database_adapter = DatabaseAdapter(collection)
     simulation_persistence = SimulationPersistence(database_adapter)
     message_brocker = MessageBrokerAdapter(celery_app)
-    #matplotlib.use('Agg')
+    matplotlib.use('Agg')
     CORS(app)
     sns.set()
     fig = plt.figure(1, figsize=(20, 13))
-    test("60d886cf026e8f62d0415c4f")
-    plt.show()
+    #test("60d886cf026e8f62d0415c4f")
+    #plt.show()
     #add_simulation_worker(10, 900, False, False, False, 15)
-    #app.run(debug=True)
+    app.run(debug=True)
