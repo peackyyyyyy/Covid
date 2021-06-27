@@ -1,5 +1,5 @@
 class DataSimulation:
-    def __init__(self, status, id, DURATION, DENSITY, confinement, port_du_mask, border, new_variant, infected_stats, dead_stats):
+    def __init__(self, id, status, DURATION, DENSITY, confinement, port_du_mask, border, new_variant, infected_stats, dead_stats):
         self.id = id
         self.status = status
         self.DURATION = DURATION
