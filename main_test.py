@@ -8,22 +8,37 @@ import numpy as np
 import seaborn as sns
 from matplotlib import pyplot as plt, animation
 from flask import Flask, send_file, render_template, request, jsonify, make_response
+from pymongo import MongoClient
+
+from covid_simulation.Status import Status
 from covid_simulation.constantes import SimulationData
+from covid_simulation.database_adapter import DatabaseAdapter
 from covid_simulation.graph_plot import GraphPlot
 from covid_simulation.simulation_data import Simulation
 from flask_cors import CORS
 
-
 # todo create route from js to flask + add to mongo result + create simulation html file
+from covid_simulation.simulation_result_persistence import SimulationPersistence
+
 
 def set_up(DURATION, DENSITY, confinement, port_du_mask, border, new_variant):
     global constantes
     global simulation
+    database_adapter = DatabaseAdapter(collection)
+    simulation_persistence = SimulationPersistence(database_adapter)
     constantes = SimulationData(DURATION, DENSITY, confinement, port_du_mask, border, new_variant)
     graphplot = GraphPlot(constantes, fig)
     simulation = Simulation(constantes, graphplot)
     people = simulation.create_data()
     simulation.update_graph(people)
+    id = simulation_persistence.insert_one_simulation(Status.CREATED, DURATION, DENSITY, confinement, port_du_mask,
+                                                      border, new_variant, [], [])
+    for i in range(DURATION * 24):
+        simulation.next_loop_event(i)
+    simulation_persistence.find_one_and_update_dataframe(id, Status.FINISH, DURATION, DENSITY, confinement,
+                                                         port_du_mask,
+                                                         border, new_variant, constantes.infected_per_day,
+                                                         constantes.dead_per_day)
 
 
 app = Flask(__name__, static_folder='static')
@@ -58,8 +73,12 @@ def build_plot():
 
 
 if __name__ == '__main__':
+    client = MongoClient('localhost')
+    database = client.get_database('simulation')
+    collection = database.get_collection('result')
     matplotlib.use('Agg')
     CORS(app)
     sns.set()
     fig = plt.figure(1, figsize=(30, 13))
-    app.run(debug=True)
+    set_up(10, 900, False, False, False, 15)
+    #app.run(debug=True)

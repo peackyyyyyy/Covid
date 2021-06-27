@@ -52,6 +52,13 @@ class Simulation:
     Main loop function, that is called at each turn
     '''
 
+    def plot_stats(self, infected_statistiques, dead_statistiques):
+        self.graphplot.fig.clf()
+        ax1, ax2 = self.graphplot.fig.subplots(1, 2)
+        self.graphplot.plot_infected_statistiques(infected_statistiques, ax1)
+        self.graphplot.plot_dead_statistiques(dead_statistiques, ax2)
+
+
     def next_loop_event(self, t):
         self.counter += 1
         self.constantes.BETA1 = self.constantes.BETA1 - (0.000001 * self.counter)
@@ -59,20 +66,23 @@ class Simulation:
         if t % 24 == 0 and t != 0 and t != 1:
             self.constantes.day.append(t / 24)
             self.constantes.infected_per_day.append(self.constantes.INFECTED)
+            self.constantes.dead_per_day.append(self.constantes.DEAD)
+            self.constantes.DEAD = 0
             self.constantes.INFECTED = 0
         # Move each person
         for p in self.constantes.people:
             p.move()
 
-        if t == self.constantes.new_variant * 24:
-            self.constantes.BETA1 = 0.5
-            self.constantes.BETA2 = 0.75
-            self.constantes.counter = 1
-            for p in self.constantes.people:
-                if np.random.rand() < self.constantes.I0 / 9:
-                    p.state = SIRState.INFECTIOUS
-                else:
-                    pass
+        if self.constantes.new_variant is not None:
+            if t == self.constantes.new_variant * 24:
+                self.constantes.BETA1 = 0.5
+                self.constantes.BETA2 = 0.75
+                self.constantes.counter = 1
+                for p in self.constantes.people:
+                    if np.random.rand() < self.constantes.I0 / 9:
+                        p.state = SIRState.INFECTIOUS
+                    else:
+                        pass
 
         self.update_graph(self.constantes.people)
 

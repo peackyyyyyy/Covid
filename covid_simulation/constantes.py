@@ -13,6 +13,7 @@ class SimulationData:
         self.new_variant = new_variant
         self.day = []
         self.infected_per_day = []
+        self.dead_per_day = []
         self.DURATION = DURATION  # in days
         self.FRAME_RATE = 2  # Refresh graphics very FRAME_RATE hours
         self.DENSITY = DENSITY
@@ -29,6 +30,7 @@ class SimulationData:
         self.clock = 0
         self.LOCKDOWN = confinement
         self.CLUSTERING = port_du_mask
+        self.DEAD = 0
         self.INFECTED = 0
         self.A = (0., 0.82142857)
         self.B = (0.46896552, 0.53125)

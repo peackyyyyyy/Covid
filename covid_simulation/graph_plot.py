@@ -43,7 +43,7 @@ class GraphPlot:
             self.count_by_population.index = np.arange(len(self.count_by_population)) / 24
             sns.lineplot(data=self.count_by_population, ax=ax)
 
-    def plot_statistiques(self, infected_per_day, ax=None):
+    def plot_infected_statistiques(self, infected_per_day, ax=None):
         if ax != None:
             x = np.arange(len(infected_per_day))  # the label locations
             width = 0.2  # the width of the bars
@@ -52,4 +52,15 @@ class GraphPlot:
             # Add some text for labels, title and custom x-axis tick labels, etc.
             ax.set_ylabel('Number')
             ax.set_title('Infected per Day')
+            ax.set_xticks(x)
+
+    def plot_dead_statistiques(self, dead_per_day, ax=None):
+        if ax != None:
+            x = np.arange(len(dead_per_day))  # the label locations
+            width = 0.2  # the width of the bars
+            ax.bar(x - width / self.constantes.DURATION, dead_per_day, width, label='Infected')
+
+            # Add some text for labels, title and custom x-axis tick labels, etc.
+            ax.set_ylabel('Number')
+            ax.set_title('Dead per Day')
             ax.set_xticks(x)

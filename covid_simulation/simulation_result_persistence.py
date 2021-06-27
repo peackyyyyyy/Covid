@@ -2,42 +2,59 @@ from typing import List
 
 from bson import ObjectId
 
+from covid_simulation.Data_Simulation import DataSimulation
+from covid_simulation.Status import Status
 from covid_simulation.database_adapter import DatabaseAdapter
 
 
-class DataframeLabeledPersistence:
+class SimulationPersistence:
 
     def __init__(self, database_adapter: DatabaseAdapter):
         self._database_adapter = database_adapter
 
-    def find_one_and_update_dataframe(self, dataframe: dict, label: int, sha256: str) -> str:
-        path_dict = {'$set': {"dataframe": dataframe, "label": label, "sha256": sha256}}
-        return self._database_adapter.find_one_and_update(sha256, path_dict)
+    def find_one_and_update_dataframe(self, id, status, DURATION, DENSITY, confinement, port_du_mask, border, new_variant,
+                                      infected_stats, dead_stats) -> str:
+        path_dict = {
+            '$set': {'status': status, "duration": DURATION, "density": DENSITY, "confinement": confinement, "port_mask": port_du_mask,
+                     "border": border, "new_variant": new_variant, "infected_stats": infected_stats,
+                     "dead_stats": dead_stats}}
+        return self._database_adapter.find_one_and_update(id, path_dict)
 
-    def find_dataframes(self, doc: dict = None) -> List[DataframeLabeled]:
-        label_dataframes = []
+    def find_simulations(self, doc: dict = None) -> List[DataSimulation]:
+        data_simulations = []
         results = self._database_adapter.find(doc)
         for result in results:
-            label_dataframes.append(DataframeLabeled(str(result['_id']), result['dataframe'], result['label'], result['sha256']))
-        return label_dataframes
+            data_simulations.append(
+                DataSimulation(str(result['_id']), result['status'],  result['duration'], result['density'], result['confinement'],
+                               result['port_mask'], result['border'], result['new_variant'],
+                               result['infected_stats'], result['dead_stats']))
+        return data_simulations
 
-    def find_one_simulation_by_id(self, id: str) -> DataframeLabeled:
+    def find_one_simulation_by_id(self, id: str) -> DataSimulation:
         doc = {"_id": ObjectId(id)}
         result = self._database_adapter.find_one(doc)
-        return DataframeLabeled(str(result['_id']), result['dataframe'], result['label'], result['sha256'])
+        return DataSimulation(str(result['_id']), result['status'], result['duration'], result['density'], result['confinement'],
+                              result['port_mask'], result['border'], result['new_variant'],
+                              result['infected_stats'], result['dead_stats'])
 
-    def find_simulations_by_ids(self, ids: List[str]) -> List[DataframeLabeled]:
+    def find_simulations_by_ids(self, ids: List[str]) -> List[DataSimulation]:
         objected_ids = []
         for id in ids:
             objected_ids.append(ObjectId(id))
-        list_dataframe_labeled = []
+        list_data_simulations = []
         doc = {"_id": {"$in": objected_ids}}
         results = self._database_adapter.find(doc)
         for result in results:
-            dataframe_labeled = DataframeLabeled(str(result['_id']), result['dataframe'], result['label'], result['sha256'])
-            list_dataframe_labeled.append(dataframe_labeled)
-        return list_dataframe_labeled
+            data_simulations = DataSimulation(str(result['_id']), result['status'], result['duration'], result['density'],
+                                              result['confinement'],
+                                              result['port_mask'], result['border'], result['new_variant'],
+                                              result['infected_stats'], result['dead_stats'])
+            list_data_simulations.append(data_simulations)
+        return list_data_simulations
 
-    def insert_one_simulation(self, dataframe: dict, label: int, sha256: str) -> str:
-        doc = {"dataframe": dataframe, "label": label, "sha256": sha256}
+    def insert_one_simulation(self, status: Status, DURATION, DENSITY, confinement, port_du_mask, border, new_variant,
+                              infected_stats, dead_stats) -> str:
+        doc = {"status": status, "duration": DURATION, "density": DENSITY, "confinement": confinement, "port_mask": port_du_mask,
+               "border": border, "new_variant": new_variant, "infected_stats": infected_stats,
+               "dead_stats": dead_stats}
         return self._database_adapter.insert_one(doc)

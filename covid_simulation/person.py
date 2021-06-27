@@ -111,6 +111,7 @@ class InfectiousPerson(Person):
     def update(self):
         self.date = self.date + 1
         if np.random.rand() < self.constantes.GAMMA2:
+            self.constantes.DEAD += 1
             return DeadPerson(self.x, self.y, self.constantes)
         elif self.date > self.constantes.GAMMA1:
             return RecoveredPerson(self.x, self.y, self.constantes)

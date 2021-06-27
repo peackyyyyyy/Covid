@@ -7,3 +7,5 @@ flask
 numpngw
 pymongo
 flask_cors
+mongodb
+celery
