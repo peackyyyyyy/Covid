@@ -11,6 +11,9 @@ class DataSimulation:
         self.infected_stats = infected_stats
         self.dead_stats = dead_stats
 
+    def get_id(self):
+        return self.id
+
     def get_duration(self):
         return self.DURATION
 

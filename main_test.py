@@ -82,13 +82,19 @@ def add_simulation():
 
 @app.route('/simulation', methods=['GET'])
 def get_simulation():
-    pass
+    simulations = simulation_persistence.find_simulations()
+    data = []
+    for simulation in simulations:
+        data.append({'id': simulation.get_id(), "duree": simulation.get_duration(), "population": simulation.get_density(),
+                     "port_mask": simulation.get_port_du_mask(), "deplacement_region": simulation.get_border(),
+                     "new_variant": simulation.get_new_variant(), "status": simulation.get_status()})
+    response = make_response(json.dumps({'success': True}), 200, {'ContentType': 'application/json'}, {'data': data})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
-@app.route('/simulation_result', methods=['GET', 'POST'])
-def simulation_result():
-    fig = plt.figure(1, figsize=(30, 13))
-    post_data = request.get_json()
-    id = post_data.get('id')
+@app.route('/simulation_result/<id>', methods=['GET'])
+def simulation_result(id):
+    fig = plt.figure(1, figsize=(20, 13))
     result = simulation_persistence.find_one_simulation_by_id(id)
     constantes = SimulationData(result.DURATION, result.DENSITY, result.confinement, result.port_du_mask, result.border,
                                 result.new_variant)
@@ -137,11 +143,11 @@ if __name__ == '__main__':
     database_adapter = DatabaseAdapter(collection)
     simulation_persistence = SimulationPersistence(database_adapter)
     message_brocker = MessageBrokerAdapter(celery_app)
-    matplotlib.use('Agg')
+    #matplotlib.use('Agg')
     CORS(app)
     sns.set()
     fig = plt.figure(1, figsize=(20, 13))
-    #test("60d886cf026e8f62d0415c4f")
-    #plt.show()
+    test("60d886cf026e8f62d0415c4f")
+    plt.show()
     #add_simulation_worker(10, 900, False, False, False, 15)
-    app.run(debug=True)
+    #app.run(debug=True)
