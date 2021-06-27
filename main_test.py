@@ -108,7 +108,7 @@ def simulation_result():
 
 @app.route('/simulation_direct', methods=['GET'])
 def simulation_direct():
-    fig = plt.figure(1, figsize=(30, 13))
+    fig = plt.figure(1, figsize=(20, 13))
     img = io.BytesIO()
     anim = animation.FuncAnimation(fig, simulation.next_loop_event, frames=np.arange(constantes.DURATION * 24),
                                    interval=100, repeat=False)
@@ -137,10 +137,11 @@ if __name__ == '__main__':
     database_adapter = DatabaseAdapter(collection)
     simulation_persistence = SimulationPersistence(database_adapter)
     message_brocker = MessageBrokerAdapter(celery_app)
-    #matplotlib.use('Agg')
+    matplotlib.use('Agg')
     CORS(app)
     sns.set()
-    fig = plt.figure(1, figsize=(30, 13))
-    plt.show()
+    fig = plt.figure(1, figsize=(20, 13))
+    #test("60d886cf026e8f62d0415c4f")
+    #plt.show()
     #add_simulation_worker(10, 900, False, False, False, 15)
-    #app.run(debug=True)
+    app.run(debug=True)
