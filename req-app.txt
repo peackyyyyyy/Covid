@@ -1,7 +1,0 @@
-pandas
-numpy
-seaborn
-matplotlib
-dataclasses
-PyQt5==5.9.2
-flask

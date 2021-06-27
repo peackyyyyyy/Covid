@@ -62,6 +62,8 @@
                     
       </nav>
     <body>
+    
+    https://www.gouvernement.fr/info-coronavirus/carte-et-donnees#vue_d_ensemble-nombre_moyen_de_nouvelles_hospitalisations_quotidiennes
     <h1 class="display-3 text-center text-info">Simulation</h1>
 
     <form method="post">
