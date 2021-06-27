@@ -112,83 +112,137 @@
 
     <h1 class="display-3 text-center text-info">Simulation</h1>
 
+          <!-- Button ajouter simulation -->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+          Ajouter Simulation
+          </button>
+
+          <!-- Modele du pop-up -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Ajouter Simulation</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                <form>
+
+                    <div class="form-row p-3">
+
+                      <div class="form-group col-md-6">
+
+                        <label for="population">Population</label>
+
+                        <input type="number" class="form-control" min=1 name="population" id="population" placeholder="800 habitants">
+
+                      </div>
+
+                      <div class="form-group col-md-6">
+
+                        <label for="duree">Durée (Jours)</label>
+
+                        <input type="number" class="form-control" min=20 name="duree" id="duree" placeholder="50 jours">
+
+                      </div>
+
+                      <div class="form-group col-md-6">
+
+                        <label for="mask">Port du mask</label>
+
+                        <select name="mask" class="form-control" id="mask">
+
+                            <option value="0">Non</option>
+
+                            <option value="1">Oui</option>
+
+                        </select>
+
+                      </div>
+
+                      <div class="form-group col-md-6">
+
+                        <label for="Confinement">confinement</label>
+
+                        <select name="Confinement" class="form-control" id="confinement">
+
+                            <option value="0">Non</option>
+
+                            <option value="1">Oui</option>
+
+                        </select>
+
+                      </div>
+
+                      <div class="form-group col-md-6">
+
+                        <label for="fermeture_frontieres">Fermeture des frontieres</label>
+
+                        <select name="fermeture_frontieres" class="form-control" id="fermeture_frontieres">
+
+                            <option value="0">Non</option>
+
+                            <option value="1">Oui</option>
+
+                        </select>
+
+                      </div>
+
+                      <div class="form-group col-md-6">
+
+                      <label for="variant">Apparition nouveau variant</label>
+
+                        <input type="number" class="form-control" min=0 name="variant" id="variant" placeholder="50 jours">
+
+                      </div>
+
+                      
+
+                    </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Lancer</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
 
-    <form>
 
-      <div class="form-row p-3">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">ID Simulation</th>
+          <th scope="col">Parametres</th>
+          <th scope="col">Etat</th>
+          <th scope="col">Simulation</th>
+          <th scope="col">Resultat</th>
+        </tr>
+      </thead>
+      <tbody>
 
-        <div class="form-group col-md-1">
 
-          <label for="population">Population</label>
+        <!-- template-->
+        <tr>
+          <th scope="row">12226654</th>
+          <td>Parametres1<br>Parametres2<br>Parametres3<br></td>
+          <td>France</td>
+          <td><a href="simm"><button type="submit" id="simulation" class="btn btn-primary m-3" name="submit">Simulation</button></a></td>
+          <td><a href="simm"><button type="submit" id="resultat" class="btn btn-primary m-3" name="submit">Resultat</button></a></td>
+        </tr>
+        <!-- template-->
 
-          <input type="number" class="form-control" name="population" id="population" placeholder="800">
 
-        </div>
+      </tbody>
+    </table>
 
-        <div class="form-group col-md-2">
 
-          <label for="duree">Durée</label>
-
-          <input type="number" class="form-control" name="duree" id="duree">
-
-        </div>
-
-        <div class="form-group col-md-2">
-
-          <label for="mask">Port du mask</label>
-
-          <select name="mask" class="form-control" id="mask">
-
-              <option value="0">Non</option>
-
-              <option value="1">Oui</option>
-
-          </select>
-
-        </div>
-
-        <div class="form-group col-md-1">
-
-          <label for="Confinement">confinement</label>
-
-          <select name="Confinement" class="form-control" id="confinement">
-
-              <option value="0">Non</option>
-
-              <option value="1">Oui</option>
-
-          </select>
-
-        </div>
-
-        <div class="form-group col-md-2">
-
-          <label for="fermeture_frontieres">Fermeture des frontieres</label>
-
-          <select name="fermeture_frontieres" class="form-control" id="fermeture_frontieres">
-
-              <option value="0">Non</option>
-
-              <option value="1">Oui</option>
-
-          </select>
-
-        </div>
-
-        <div class="form-group col-md-2">
-
-        <label for="variant">Nouveau variant</label>
-
-          <input type="number" class="form-control" name="variant" id="variant">
-
-        </div>
-
-        <button type="submit" id="submit" class="btn btn-primary m-3" name="submit">Lancer</button>
-
-      </div>
-
-    </form>
+    
 
     </body>
 
