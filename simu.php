@@ -270,7 +270,7 @@
 
                                             <div class="modal-footer">
                                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                              <a href="http://localhost:5000/simulation_direct"><button type="submit" class="btn btn-primary m-3" name="submit">Simulation</button></a>
+                                              <a href="http://localhost:5000/simulation_direct"><button type="submit" class="btn btn-primary" name="submit">Simulation</button></a>
                                             </div>
                                           </div>
                                         </div>
@@ -295,7 +295,7 @@
 
                                             <div class="modal-footer">
                                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                              <a href="http://localhost:5000/simulation_direct"><button type="submit" class="btn btn-primary m-3" name="submit">Simulation</button></a>
+                                              <a href="http://localhost:5000/simulation_direct"><button type="submit" class="btn btn-primary" name="submit">Simulation</button></a>
                                             </div>
                                           </div>
                                         </div>
