@@ -49,6 +49,17 @@ def set_up(DURATION, DENSITY, confinement, port_du_mask, border, new_variant):
     people = simulation.create_data()
     simulation.update_graph(people)
 
+def set_up_by_id(id):
+    global constantes
+    global simulation
+    simulation = simulation_persistence.find_one_simulation_by_id(id)
+    constantes = SimulationData(simulation.DURATION, simulation.DENSITY, simulation.confinement, simulation.port_du_mask,
+                                simulation.border, simulation.new_variant)
+    graphplot = GraphPlot(constantes, fig)
+    simulation = Simulation(constantes, graphplot)
+    people = simulation.create_data()
+    simulation.update_graph(people)
+
 
 app = Flask(__name__, static_folder='static')
 
@@ -65,6 +76,17 @@ def set_simulation():
     response = make_response(json.dumps({'success': True}), 200, {'ContentType': 'application/json'})
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
+
+@app.route('/set_simulation_id', methods=['GET', 'POST'])
+def set_simulation_id():
+    if request.method == 'POST':
+        post_data = request.get_json()
+        print(post_data)
+        set_up_by_id(str(post_data.get('id')))
+    response = make_response(json.dumps({'success': True}), 200, {'ContentType': 'application/json'})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
 
 
 @app.route('/add_simulation', methods=['GET', 'POST'])
