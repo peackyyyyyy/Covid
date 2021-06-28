@@ -83,6 +83,7 @@ def add_simulation():
 @app.route('/simulation', methods=['GET'])
 def get_simulation():
     simulations = simulation_persistence.find_simulations()
+    simulations = simulations[::-1]
     data = []
     for simulation in simulations:
         data.append({'id': simulation.get_id(), "duree": simulation.get_duration(), "population": simulation.get_density(),
@@ -95,7 +96,7 @@ def get_simulation():
 
 @app.route('/simulation_result/<id>', methods=['GET'])
 def simulation_result(id):
-    fig = plt.figure(1, figsize=(20, 13))
+    fig = plt.figure(1, figsize=(18, 8))
     result = simulation_persistence.find_one_simulation_by_id(str(id))
     print(result)
     constantes = SimulationData(result.DURATION, result.DENSITY, result.confinement, result.port_du_mask, result.border,
@@ -116,7 +117,7 @@ def simulation_result(id):
 
 @app.route('/simulation_direct', methods=['GET'])
 def simulation_direct():
-    fig = plt.figure(1, figsize=(20, 13))
+    fig = plt.figure(1, figsize=(18, 8))
     img = io.BytesIO()
     anim = animation.FuncAnimation(fig, simulation.next_loop_event, frames=np.arange(constantes.DURATION * 24),
                                    interval=100, repeat=False)
@@ -148,7 +149,7 @@ if __name__ == '__main__':
     matplotlib.use('Agg')
     CORS(app)
     sns.set()
-    fig = plt.figure(1, figsize=(20, 13))
+    fig = plt.figure(1, figsize=(18, 8))
     #test("60d886cf026e8f62d0415c4f")
     #plt.show()
     #add_simulation_worker(10, 900, False, False, False, 15)

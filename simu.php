@@ -246,7 +246,7 @@
 
     <script>
 
-        $(document).ready(function get_simulation(){
+        function get_simulation(){
             $.ajax({
                     type: 'GET',
                     url: 'http://localhost:5000/simulation',
@@ -255,20 +255,34 @@
                         var tab = document.getElementById('tab');
                         console.log(data);
                         data.forEach(element => { console.log(element);
-                            tab.innerHTML += `
-                                <tr>
-                                  <th scope="row">${element['id']}</th>
-                                  <td>Duree : ${element['duree']}<br>Population : ${element['population']}<br>Port du masque :${element['port_mask']}<br>Deplacement inter-region : ${element['deplacement_region']}<br>Nouveau Variant : ${element['new_variant']}<br></td>
-                                  <td>${element['status']}</td>
-                                  <td><a href="http://localhost:5000/simulation_direct"><button type="submit" id="simulation" class="btn btn-primary m-3" name="submit">Simulation</button></a></td>
-                                  <td><a href="http://localhost:5000/simulation_result/${element['id']}"<button type="submit" id="resultat" class="btn btn-primary m-3" name="submit">Resultat</button></a></td>
-                                </tr>
-                            `;
+                            if(element['status'] == 'finish'){
+                                tab.innerHTML += `
+                                    <tr>
+                                      <th scope="row">${element['id']}</th>
+                                      <td>Duree : ${element['duree']}<br>Population : ${element['population']}<br>Port du masque : ${element['port_mask']}<br>Deplacement inter-region : ${element['deplacement_region']}<br>Nouveau Variant : ${element['new_variant']}<br></td>
+                                      <td>${element['status']}</td>
+                                      <td><a href="http://localhost:5000/simulation_direct"><button type="submit" id="simulation" class="btn btn-primary m-3" name="submit">Simulation</button></a></td>
+                                      <td><a href="http://localhost:5000/simulation_result/${element['id']}"<button type="submit" id="resultat" class="btn btn-primary m-3" name="submit">Resultat</button></a></td>
+                                    </tr>
+                                `;
+                            }
+                            else {
+                                tab.innerHTML += `
+                                    <tr>
+                                      <th scope="row">${element['id']}</th>
+                                      <td>Duree : ${element['duree']}<br>Population : ${element['population']}<br>Port du masque : ${element['port_mask']}<br>Deplacement inter-region : ${element['deplacement_region']}<br>Nouveau Variant : ${element['new_variant']}<br></td>
+                                      <td>${element['status']}</td>
+                                      <td><a href="http://localhost:5000/simulation_direct"><button type="submit" id="simulation" class="btn btn-primary m-3" name="submit">Simulation</button></a></td>
+                                    </tr>
+                                `;
+                            }
                         });
 
                     }
             });
-        });
+        }
+
+        setInterval(get_simulation(), 5000);
 
         $("#lancer").click(function (e) {
 
@@ -311,6 +325,7 @@
                 success: function (data) {
 
                     alert("Simulation Ajouté");
+                    window.location.href = 'http://localhost/Covid/simu.php';
 
                 }
 
