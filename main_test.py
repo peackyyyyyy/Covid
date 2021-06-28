@@ -50,6 +50,19 @@ def set_up(DURATION, DENSITY, confinement, port_du_mask, border, new_variant):
     simulation.update_graph(people)
 
 
+def set_up_by_id(id):
+    global constantes
+    global simulation
+    simulation = simulation_persistence.find_one_simulation_by_id(id)
+    constantes = SimulationData(simulation.DURATION, simulation.DENSITY, simulation.confinement,
+                                simulation.port_du_mask,
+                                simulation.border, simulation.new_variant)
+    graphplot = GraphPlot(constantes, fig)
+    simulation = Simulation(constantes, graphplot)
+    people = simulation.create_data()
+    simulation.update_graph(people)
+
+
 app = Flask(__name__, static_folder='static')
 
 
@@ -67,18 +80,31 @@ def set_simulation():
     return response
 
 
+@app.route('/set_simulation_id', methods=['GET', 'POST'])
+def set_simulation_id():
+    if request.method == 'POST':
+        post_data = request.get_json()
+        print(post_data)
+        set_up_by_id(str(post_data.get('id')))
+    response = make_response(json.dumps({'success': True}), 200, {'ContentType': 'application/json'})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+
 @app.route('/add_simulation', methods=['GET', 'POST'])
 def add_simulation():
     if request.method == 'POST':
         post_data = request.get_json()
         print(post_data)
-        add_simulation_worker(int(post_data.get('nombre_jours')), int(post_data.get('population')), bool(post_data.get('confinement')),
-               bool(post_data.get('port_mask')),
-               bool(post_data.get('deplacement_region')), int(post_data.get('new_variant')))
+        add_simulation_worker(int(post_data.get('nombre_jours')), int(post_data.get('population')),
+                              bool(post_data.get('confinement')),
+                              bool(post_data.get('port_mask')),
+                              bool(post_data.get('deplacement_region')), int(post_data.get('new_variant')))
 
     response = make_response(json.dumps({'success': True}), 200, {'ContentType': 'application/json'})
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
+
 
 @app.route('/simulation', methods=['GET'])
 def get_simulation():
@@ -86,13 +112,16 @@ def get_simulation():
     simulations = simulations[::-1]
     data = []
     for simulation in simulations:
-        data.append({'id': simulation.get_id(), "duree": simulation.get_duration(), "population": simulation.get_density(),
-                     "port_mask": simulation.get_port_du_mask(), "deplacement_region": simulation.get_border(),
-                     "new_variant": simulation.get_new_variant(), "status": simulation.get_status()})
+        data.append(
+            {'id': simulation.get_id(), "duree": simulation.get_duration(), "confinement": simulation.get_confinement(),
+             "population": simulation.get_density(),
+             "port_mask": simulation.get_port_du_mask(), "deplacement_region": simulation.get_border(),
+             "new_variant": simulation.get_new_variant(), "status": simulation.get_status()})
     response = make_response(jsonify(data), 200, {'ContentType': 'application/json'})
     print(response.data)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
+
 
 @app.route('/simulation_result/<id>', methods=['GET'])
 def simulation_result(id):
@@ -112,7 +141,6 @@ def simulation_result(id):
     plot_url = base64.b64encode(img.getvalue()).decode()
 
     return render_template('simulation_result.html', plot_url=plot_url)
-
 
 
 @app.route('/simulation_direct', methods=['GET'])
@@ -150,7 +178,7 @@ if __name__ == '__main__':
     CORS(app)
     sns.set()
     fig = plt.figure(1, figsize=(18, 8))
-    #test("60d886cf026e8f62d0415c4f")
-    #plt.show()
-    #add_simulation_worker(10, 900, False, False, False, 15)
+    # test("60d886cf026e8f62d0415c4f")
+    # plt.show()
+    # add_simulation_worker(10, 900, False, False, False, 15)
     app.run(debug=True)

@@ -259,10 +259,24 @@
                                 tab.innerHTML += `
                                     <tr>
                                       <th scope="row">${element['id']}</th>
-                                      <td>Duree : ${element['duree']}<br>Population : ${element['population']}<br>Port du masque : ${element['port_mask']}<br>Deplacement inter-region : ${element['deplacement_region']}<br>Nouveau Variant : ${element['new_variant']}<br></td>
+                                      <td>Duree : ${element['duree']}<br>Population : ${element['population']}<br>Confinement : ${element['confinement']}<br>Port du masque : ${element['port_mask']}<br>Deplacement inter-region : ${element['deplacement_region']}<br>Nouveau Variant : ${element['new_variant']}<br></td>
                                       <td>${element['status']}</td>
-                                      <td><a href="http://localhost:5000/simulation_direct"><button type="submit" id="simulation" class="btn btn-primary m-3" name="submit">Simulation</button></a></td>
-                                      <td><a href="http://localhost:5000/simulation_result/${element['id']}"<button type="submit" id="resultat" class="btn btn-primary m-3" name="submit">Resultat</button></a></td>
+                                      <td><button id=${element['id']} type="button" class="btn btn-primary" data-toggle="modal" data-target="#simul_${element['id']}" onclick="set_simulation('${element['id']}')">
+                                      Afficher
+                                      </button>
+                                      <div class="modal fade" id="simul_${element['id']}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                          <div class="modal-content">${element['id']}
+
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                              <a href="http://localhost:5000/simulation_direct"><button type="submit" class="btn btn-primary" name="submit">Simulation</button></a>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      </td>
+                                      <td><a href="http://localhost:5000/simulation_result/${element['id']}"<button type="submit" id="resultat" class="btn btn-primary" name="submit">Resultat</button></a></td>
                                     </tr>
                                 `;
                             }
@@ -270,9 +284,23 @@
                                 tab.innerHTML += `
                                     <tr>
                                       <th scope="row">${element['id']}</th>
-                                      <td>Duree : ${element['duree']}<br>Population : ${element['population']}<br>Port du masque : ${element['port_mask']}<br>Deplacement inter-region : ${element['deplacement_region']}<br>Nouveau Variant : ${element['new_variant']}<br></td>
+                                      <td>Duree : ${element['duree']}<br>Population : ${element['population']}<br>Confinement : ${element['confinement']}<br>Port du masque : ${element['port_mask']}<br>Deplacement inter-region : ${element['deplacement_region']}<br>Nouveau Variant : ${element['new_variant']}<br></td>
                                       <td>${element['status']}</td>
-                                      <td><a href="http://localhost:5000/simulation_direct"><button type="submit" id="simulation" class="btn btn-primary m-3" name="submit">Simulation</button></a></td>
+                                      <td><button id=${element['id']} type="button" class="btn btn-primary" data-toggle="modal" data-target="#simul_${element['id']}" onclick="set_simulation('${element['id']}')">
+                                      Afficher
+                                      </button>
+                                      <div class="modal fade" id="simul_${element['id']}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                          <div class="modal-content">${element['id']}
+
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                              <a href="http://localhost:5000/simulation_direct"><button type="submit" class="btn btn-primary" name="submit">Simulation</button></a>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      </td>
                                     </tr>
                                 `;
                             }
@@ -281,6 +309,23 @@
                     }
             });
         }
+
+        function set_simulation(id){
+                 $.ajax({
+
+                        type: "POST",
+
+                        url: "http://localhost:5000/set_simulation_id",
+
+                        data: JSON.stringify({ "id": id } ),
+
+                        contentType: "application/json; charset=utf-8",
+
+                        dataType: "json",
+
+                 });
+        }
+
 
         setInterval(get_simulation(), 5000);
 
