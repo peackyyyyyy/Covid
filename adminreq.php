@@ -16,8 +16,10 @@
         $password = $_POST['inputPassword'];
         $adm=$_POST['inputAdmin'];
           if (isset($_POST["modif"])) {
+                //requete pour update des utilisateurs
                 $req="UPDATE Utilisateur SET id_utilisateur= ?, Nom= ? ,Prenom= ? ,Mail= ?, adresse_postale= ?, adm= ? WHERE id_utilisateur= ? ";
                 $result=$bd->prepare($req);
+                //binvalue
                 $result->bindValue(1, $_POST['inputid']);
                 $result->bindValue(2, $_POST['inputnom']);
                 $result->bindValue(3, $_POST['inputprenom']);
@@ -29,12 +31,14 @@
                 header('location: admin.php');
                 die();
           }
+          //suppression utilisateur
           if (isset($_POST["sup"])) {
             $req="DELETE FROM Utilisateur WHERE id_utilisateur='".$_POST['inputid']."'";
             $result=$bd->prepare($req);
             $result->execute();
             header('location: admin.php');
           }
+          //ajout utilisateur
           if (isset($_POST["ajout"])) {
             if ($nom&&$prenom&&$adresse&&$email&&$password&&$adm)
                 {
