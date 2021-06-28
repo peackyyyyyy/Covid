@@ -259,7 +259,7 @@
                                 tab.innerHTML += `
                                     <tr>
                                       <th scope="row">${element['id']}</th>
-                                      <td>Duree : ${element['duree']}<br>Population : ${element['population']}<br>Port du masque : ${element['port_mask']}<br>Deplacement inter-region : ${element['deplacement_region']}<br>Nouveau Variant : ${element['new_variant']}<br></td>
+                                      <td>Duree : ${element['duree']}<br>Population : ${element['population']}<br>Confinement : ${element['confinement']}<br>Port du masque : ${element['port_mask']}<br>Deplacement inter-region : ${element['deplacement_region']}<br>Nouveau Variant : ${element['new_variant']}<br></td>
                                       <td>${element['status']}</td>
                                       <td><button id=${element['id']} type="button" class="btn btn-primary" data-toggle="modal" data-target="#simul_${element['id']}" onclick="set_simulation('${element['id']}')">
                                       Afficher
@@ -284,7 +284,7 @@
                                 tab.innerHTML += `
                                     <tr>
                                       <th scope="row">${element['id']}</th>
-                                      <td>Duree : ${element['duree']}<br>Population : ${element['population']}<br>Port du masque : ${element['port_mask']}<br>Deplacement inter-region : ${element['deplacement_region']}<br>Nouveau Variant : ${element['new_variant']}<br></td>
+                                      <td>Duree : ${element['duree']}<br>Population : ${element['population']}<br>Confinement : ${element['confinement']}<br>Port du masque : ${element['port_mask']}<br>Deplacement inter-region : ${element['deplacement_region']}<br>Nouveau Variant : ${element['new_variant']}<br></td>
                                       <td>${element['status']}</td>
                                       <td><button id=${element['id']} type="button" class="btn btn-primary" data-toggle="modal" data-target="#simul_${element['id']}" onclick="set_simulation('${element['id']}')">
                                       Afficher
