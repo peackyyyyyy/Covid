@@ -260,8 +260,8 @@
                                   <th scope="row">${element['id']}</th>
                                   <td>Duree : ${element['duree']}<br>Population : ${element['population']}<br>Port du masque :${element['port_mask']}<br>Deplacement inter-region : ${element['deplacement_region']}<br>Nouveau Variant : ${element['new_variant']}<br></td>
                                   <td>${element['status']}</td>
-                                  <td><a href="simm"><button type="submit" id="simulation" class="btn btn-primary m-3" name="submit">Simulation</button></a></td>
-                                  <td><a href="simm"><button type="submit" id="resultat" class="btn btn-primary m-3" name="submit">Resultat</button></a></td>
+                                  <td><a href="http://localhost:5000/simulation_direct"><button type="submit" id="simulation" class="btn btn-primary m-3" name="submit">Simulation</button></a></td>
+                                  <td><a href="http://localhost:5000/simulation_result/${element['id']}"<button type="submit" id="resultat" class="btn btn-primary m-3" name="submit">Resultat</button></a></td>
                                 </tr>
                             `;
                         });
