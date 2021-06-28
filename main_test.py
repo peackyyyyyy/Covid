@@ -96,7 +96,8 @@ def get_simulation():
 @app.route('/simulation_result/<id>', methods=['GET'])
 def simulation_result(id):
     fig = plt.figure(1, figsize=(20, 13))
-    result = simulation_persistence.find_one_simulation_by_id(id)
+    result = simulation_persistence.find_one_simulation_by_id(str(id))
+    print(result)
     constantes = SimulationData(result.DURATION, result.DENSITY, result.confinement, result.port_du_mask, result.border,
                                 result.new_variant)
     graphplot = GraphPlot(constantes, fig)
