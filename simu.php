@@ -276,7 +276,7 @@
                                         </div>
                                       </div>
                                       </td>
-                                      <td><a href="http://localhost:5000/simulation_result/${element['id']}"<button type="submit" id="resultat" class="btn btn-primary m-3" name="submit">Resultat</button></a></td>
+                                      <td><a href="http://localhost:5000/simulation_result/${element['id']}"<button type="submit" id="resultat" class="btn btn-primary" name="submit">Resultat</button></a></td>
                                     </tr>
                                 `;
                             }
