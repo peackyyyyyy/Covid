@@ -2,7 +2,7 @@
 
 <html>
 <head>
-        <title>COV19</title> 
+        <title>COV19</title>
         <meta http-equiv="content.type" content="text/html"; charset="UTF-8">
         <!-- Link CSS -->
         <link rel="stylesheet" href="css/style.css">
@@ -198,7 +198,7 @@
 
                       </div>
 
-                      
+
 
                     </div>
 
@@ -206,7 +206,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Lancer</button>
+                  <button type="button" id="lancer" class="btn btn-primary">Lancer</button>
                 </div>
               </div>
             </div>
@@ -214,7 +214,7 @@
 
 
 
-    <table class="table table-hover">
+    <table id="tab" class="table table-hover">
       <thead>
         <tr>
           <th scope="col">ID Simulation</th>
@@ -228,13 +228,7 @@
 
 
         <!-- template-->
-        <tr>
-          <th scope="row">12226654</th>
-          <td>Parametres1<br>Parametres2<br>Parametres3<br></td>
-          <td>France</td>
-          <td><a href="simm"><button type="submit" id="simulation" class="btn btn-primary m-3" name="submit">Simulation</button></a></td>
-          <td><a href="simm"><button type="submit" id="resultat" class="btn btn-primary m-3" name="submit">Resultat</button></a></td>
-        </tr>
+
         <!-- template-->
 
 
@@ -242,7 +236,7 @@
     </table>
 
 
-    
+
 
     </body>
 
@@ -252,7 +246,45 @@
 
     <script>
 
-        $("#submit").click(function (e) {
+        function get_simulation(){
+            $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:5000/simulation',
+                    success: function(data)
+                    {
+                        var tab = document.getElementById('tab');
+                        console.log(data);
+                        data.forEach(element => { console.log(element);
+                            if(element['status'] == 'finish'){
+                                tab.innerHTML += `
+                                    <tr>
+                                      <th scope="row">${element['id']}</th>
+                                      <td>Duree : ${element['duree']}<br>Population : ${element['population']}<br>Port du masque : ${element['port_mask']}<br>Deplacement inter-region : ${element['deplacement_region']}<br>Nouveau Variant : ${element['new_variant']}<br></td>
+                                      <td>${element['status']}</td>
+                                      <td><a href="http://localhost:5000/simulation_direct"><button type="submit" id="simulation" class="btn btn-primary m-3" name="submit">Simulation</button></a></td>
+                                      <td><a href="http://localhost:5000/simulation_result/${element['id']}"<button type="submit" id="resultat" class="btn btn-primary m-3" name="submit">Resultat</button></a></td>
+                                    </tr>
+                                `;
+                            }
+                            else {
+                                tab.innerHTML += `
+                                    <tr>
+                                      <th scope="row">${element['id']}</th>
+                                      <td>Duree : ${element['duree']}<br>Population : ${element['population']}<br>Port du masque : ${element['port_mask']}<br>Deplacement inter-region : ${element['deplacement_region']}<br>Nouveau Variant : ${element['new_variant']}<br></td>
+                                      <td>${element['status']}</td>
+                                      <td><a href="http://localhost:5000/simulation_direct"><button type="submit" id="simulation" class="btn btn-primary m-3" name="submit">Simulation</button></a></td>
+                                    </tr>
+                                `;
+                            }
+                        });
+
+                    }
+            });
+        }
+
+        setInterval(get_simulation(), 5000);
+
+        $("#lancer").click(function (e) {
 
             e.preventDefault();
 
@@ -293,6 +325,7 @@
                 success: function (data) {
 
                     alert("Simulation Ajouté");
+                    window.location.href = 'http://localhost/Covid/simu.php';
 
                 }
 

@@ -73,8 +73,8 @@ class Simulation:
         for p in self.constantes.people:
             p.move()
 
-        if self.constantes.new_variant is not None:
-            if t == self.constantes.new_variant * 24:
+        if self.constantes.new_variant != 0:
+            if t % self.constantes.new_variant * 24 == 0:
                 self.constantes.BETA1 = 0.5
                 self.constantes.BETA2 = 0.75
                 self.constantes.counter = 1
