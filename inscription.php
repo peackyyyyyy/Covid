@@ -124,7 +124,7 @@ if ($nom&&$prenom&&$adresse&&$email&&$password&&$repeatpassword)
             // On crypte le mot de passe
                 $password = md5($password);
                 //requete qui crée le client
-                $req="INSERT INTO Utilisateur (Nom,Prenom,Mail,Adresse_postale,Mdp,Adm) VALUES
+                $req="INSERT INTO utilisateur (Nom,Prenom,Mail,Adresse_postale,Mdp,Adm) VALUES
                 ('".$nom."','".$prenom."','".$email."','".$adresse."','".$password."',0)";
                 $result=$bd->prepare($req);
                 $result->execute();
