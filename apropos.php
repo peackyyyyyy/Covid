@@ -66,6 +66,19 @@
     <h1 class="display-2 text-center text-info">Le Projet</h1>
     <h1 class="display-3 text-center text-info">L'équipe</h1>
     <h1 class="display-4 text-center text-info">L'école</h1>
+    <div>
+        <p class="text-center font-italic display-7 mt-3">Le but du projet étant de développer un site internet sur le thème du Covid 19. <br>
+            Vous aurez la possibilité de consulter l’actualité sur la pandémie mondiale du coronavirus, et de simuler une pandémie avec différents paramètres. <br>
+            Vous pourrez ensuite consulter l'évolution en direct de chaque simulation et ses résultats finaux. <br>
+            Pour sauvegarder des favoris, l'utilisateur doit créer un compte et ajouter des articles. L’administrateur aura à disposition la liste des utilisateurs afin de les administrer.<br>
+
+            Afin de mener à bien ce projet, nous avons d'abord répertorié et analysé les exigences necessaire à nos attentes. <br>
+            Cette analyse permet de développer plus efficacement diverses fonctions.<br>
+            Nous avons ensuite effectué des tests pour comparer les exigences attendues avec les résultats obtenus et améliorer ces derniers.<br>
+            Cela dans le but d'être capable de prévoir l'évolution du covid 19
+
+        </p>
+    </div>
     
     </body>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
