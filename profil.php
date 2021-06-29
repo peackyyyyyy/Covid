@@ -117,7 +117,7 @@
               $email = $_POST['inputEmail'];
               if ($nom&&$prenom&&$adresse&&$email){
 
-                  $req="UPDATE Utilisateur SET Nom='".$nom."',Prenom='".$prenom."',Mail='".$email."', adresse_postale='".$adresse."' WHERE id_utilisateur='".$_SESSION["id"]."'";
+                  $req="UPDATE utilisateur SET Nom='".$nom."',Prenom='".$prenom."',Mail='".$email."', adresse_postale='".$adresse."' WHERE id_utilisateur='".$_SESSION["id"]."'";
                   $result=$bd->prepare($req);
                   $result->execute();
                   $result->closeCursor();

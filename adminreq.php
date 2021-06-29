@@ -17,7 +17,7 @@
         $adm=$_POST['inputAdmin'];
           if (isset($_POST["modif"])) {
                 //requete pour update des utilisateurs
-                $req="UPDATE Utilisateur SET id_utilisateur= ?, Nom= ? ,Prenom= ? ,Mail= ?, adresse_postale= ?, adm= ? WHERE id_utilisateur= ? ";
+                $req="UPDATE utilisateur SET id_utilisateur= ?, Nom= ? ,Prenom= ? ,Mail= ?, adresse_postale= ?, adm= ? WHERE id_utilisateur= ? ";
                 $result=$bd->prepare($req);
                 //binvalue
                 $result->bindValue(1, $_POST['inputid']);
@@ -33,7 +33,7 @@
           }
           //suppression utilisateur
           if (isset($_POST["sup"])) {
-            $req="DELETE FROM Utilisateur WHERE id_utilisateur='".$_POST['inputid']."'";
+            $req="DELETE FROM utilisateur WHERE id_utilisateur='".$_POST['inputid']."'";
             $result=$bd->prepare($req);
             $result->execute();
             header('location: admin.php');
@@ -44,7 +44,7 @@
                 {
                      $password = md5($_POST['inputPassword']);
 
-                        $req="INSERT INTO Utilisateur (Nom,Prenom,Mail,Adresse_postale,Mdp,Adm) VALUES
+                        $req="INSERT INTO utilisateur (Nom,Prenom,Mail,Adresse_postale,Mdp,Adm) VALUES
                         ('".$nom."','".$prenom."','".$email."','".$adresse."','".$password."','".$adm."')";
                         $result=$bd->prepare($req);
                         $result->execute();
